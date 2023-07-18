@@ -56,7 +56,7 @@ class FavoritePageController extends GetxController {
   }
 
   // refresh favorite.
-  void refreshFavorite() {
+  Future<void> refreshFavorite() async {
     getFavorite(notifyLoading: true);
   }
 }

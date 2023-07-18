@@ -1,62 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sezon/src/modules/_app/ui/data/data_sources/remote_data_source/firebase_data_source/favorites_service.dart';
-import 'package:sezon/src/modules/_app/ui/data/models/product.dart';
+import 'package:sezon/src/modules/_app/ui/data/data_sources/remote_data_source/firebase_data_source/orders_service.dart';
+import 'package:sezon/src/modules/_app/ui/data/models/order.dart';
 
 class OrdersPageController extends GetxController {
   // notifiable.
-  void notifyFavorites() {
-    update(['favorite']);
+  void notifyOrders() {
+    update(['orders']);
   }
 
   // services.
-  late final FavoritesService _favoritesService = FavoritesService.instance;
+  late final OrdersService _ordersService = OrdersService.instance;
 
   // flags.
-  bool isFavoriteLoading = true;
-  bool isFavoriteLoadingFailed = false;
+  bool isOrdersLoading = true;
+  bool isOrdersLoadingFailed = false;
 
   // data.
-  List<Product> products = [];
+  List<Order> orders = [];
 
   // on init.
   @override
   void onInit() {
-    getFavorite();
+    getOrders();
     super.onInit();
   }
 
-  // get favorite.
-  void getFavorite({
+  // get orders.
+  void getOrders({
     bool notifyLoading = false,
   }) async {
     try {
       if (notifyLoading) {
-        isFavoriteLoading = true;
-        isFavoriteLoadingFailed = false;
-        notifyFavorites();
+        isOrdersLoading = true;
+        isOrdersLoadingFailed = false;
+        notifyOrders();
       }
-      List<Product>? products = await _favoritesService.getFavorite();
-      if (products != null) {
+      List<Order>? orders = await _ordersService.getOrders();
+      if (orders != null) {
         // success.
-        this.products = products;
+        this.orders = orders;
       } else {
         // failed.
         debugPrint('failed');
-        isFavoriteLoadingFailed = true;
+        isOrdersLoadingFailed = true;
       }
-      isFavoriteLoading = false;
-      notifyFavorites();
+      isOrdersLoading = false;
+      notifyOrders();
     } catch (error) {
       debugPrint('error : $error');
-      isFavoriteLoading = false;
-      isFavoriteLoadingFailed = true;
-      notifyFavorites();
+      isOrdersLoading = false;
+      isOrdersLoadingFailed = true;
+      notifyOrders();
     }
   }
 
-  // refresh favorite.
-  void refreshFavorite() {
-    getFavorite(notifyLoading: true);
+  // refresh orders.
+  Future<void> refreshOrders() async {
+    getOrders(notifyLoading: true);
   }
 }

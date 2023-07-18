@@ -11,6 +11,7 @@ class UserAvatarWidget extends StatelessWidget {
     return ClipOval(
       child: CircleAvatar(
         radius: 18.r,
+        backgroundColor: Get.theme.primaryColor,
         child: ImageFade(
           height: double.infinity,
           width: double.infinity,

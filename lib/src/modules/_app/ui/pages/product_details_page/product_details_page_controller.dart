@@ -1,62 +1,89 @@
-import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:sezon/src/modules/_app/ui/data/data_sources/remote_data_source/firebase_data_source/favorites_service.dart';
+import 'package:sezon/src/modules/_app/app_router.dart';
+import 'package:sezon/src/modules/_app/ui/data/data_sources/remote_data_source/firebase_data_source/products_service.dart';
 import 'package:sezon/src/modules/_app/ui/data/models/product.dart';
 
 class ProductDetailsPageController extends GetxController {
   // notifiable.
-  void notifyFavorites() {
-    update(['favorite']);
+  void notifySlider() {
+    update(['slider']);
+  }
+
+  void notifySuggestedProducts() {
+    update(['suggestedProducts']);
   }
 
   // services.
-  late final FavoritesService _favoritesService = FavoritesService.instance;
+  late final ProductsService _productsService = ProductsService.instance;
 
   // flags.
-  bool isFavoriteLoading = true;
-  bool isFavoriteLoadingFailed = false;
-
+  bool isSuggestedProductsLoading = true;
+  bool isSuggestedProductsLoadingFailed = false;
+  
   // data.
-  List<Product> products = [];
+  List<Product> suggestedProducts = [];
+
+  // vars.
+  int selectedSliderIndex = 0;
+
+  // arguments.
+  late Product product;
 
   // on init.
   @override
   void onInit() {
-    getFavorite();
+    product = Get.arguments['product'];
+    getSuggestedProducts();
     super.onInit();
   }
 
-  // get favorite.
-  void getFavorite({
+  // get suggested products.
+  void getSuggestedProducts({
     bool notifyLoading = false,
   }) async {
     try {
       if (notifyLoading) {
-        isFavoriteLoading = true;
-        isFavoriteLoadingFailed = false;
-        notifyFavorites();
+        isSuggestedProductsLoading = true;
+        isSuggestedProductsLoadingFailed = false;
+        notifySuggestedProducts();
       }
-      List<Product>? products = await _favoritesService.getFavorite();
+      List<Product>? products = await _productsService.getProducts();
       if (products != null) {
         // success.
-        this.products = products;
+        products.removeWhere((element) => element.id == product.id);
+        suggestedProducts = products;
       } else {
         // failed.
         debugPrint('failed');
-        isFavoriteLoadingFailed = true;
+        isSuggestedProductsLoadingFailed = true;
       }
-      isFavoriteLoading = false;
-      notifyFavorites();
+      isSuggestedProductsLoading = false;
+      notifySuggestedProducts();
     } catch (error) {
       debugPrint('error : $error');
-      isFavoriteLoading = false;
-      isFavoriteLoadingFailed = true;
-      notifyFavorites();
+      isSuggestedProductsLoading = false;
+      isSuggestedProductsLoadingFailed = true;
+      notifySuggestedProducts();
     }
   }
 
-  // refresh favorite.
-  void refreshFavorite() {
-    getFavorite(notifyLoading: true);
+  // refresh suggested products.
+  Future<void> refreshSuggestedProducts() async {
+    getSuggestedProducts(notifyLoading: true);
+  }
+
+  // navigate to checkout page.
+  void navigateToCheckoutPage() {
+    Get.toNamed(AppRouter.checkoutPage, arguments: {
+      'product': product,
+    });
+  }
+
+  // on page changed.
+  void onPageChanged(int value, CarouselPageChangedReason reason) {
+    selectedSliderIndex = value;
+    notifySlider();
   }
 }

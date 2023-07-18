@@ -51,6 +51,7 @@ class Helpers {
                 text,
                 style: TextStyle(
                   fontFamily: Helpers.getFontFamily(),
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               //   leftBarIndicatorColor: Colors.red,

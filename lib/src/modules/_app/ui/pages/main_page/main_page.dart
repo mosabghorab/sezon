@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    _mainPageController.dispose();
+    // _mainPageController.dispose();
     Get.delete<MainPageController>();
     super.dispose();
   }

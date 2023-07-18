@@ -21,23 +21,32 @@ class Product extends GetxController {
   late final FavoritesService _favoritesService = FavoritesService.instance;
 
   String? id;
+  String? categoryId;
   String? nameEn;
   String? nameAr;
+  String? descriptionEn;
+  String? descriptionAr;
   String? mainImage;
   List<String>? images;
   num? price;
 
   Product({
+    required this.categoryId,
     required this.nameEn,
     required this.nameAr,
+    required this.descriptionEn,
+    required this.descriptionAr,
     required this.mainImage,
     required this.images,
     required this.price,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
+        categoryId: json['categoryId'],
         nameEn: json['nameEn'],
         nameAr: json['nameAr'],
+        descriptionEn: json['descriptionEn'],
+        descriptionAr: json['descriptionAr'],
         mainImage: json['mainImage'],
         images: json['images'].map<String>((e) => e.toString()).toList(),
         price: json['price'],

@@ -1,62 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sezon/src/config/constants.dart';
+import 'package:image_fade/image_fade.dart';
+import 'package:sezon/src/modules/_app/ui/data/models/order.dart';
 
 class OrderWidget extends StatelessWidget {
-  const OrderWidget({Key? key}) : super(key: key);
+  final Order order;
+
+  const OrderWidget({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Image.network(
-          'https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg?auto=compress&cs=tinysrgb&w=800',
-          height: 80.h,
-          width: 80.h,
-          fit: BoxFit.cover,
-        ),
-        SizedBox(
-          width: 15.w,
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'خزف ملون صنع يدوي',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              10.verticalSpace,
-              Text(
-                'هذا النص هو مثال لنص يمكن أن يستبدل توليد هذا النص من مولد النص العربى...',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                ),
-              ),
-              5.verticalSpace,
-              Text(
-                '190ر.س',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: 6.h,
+        horizontal: 12.w,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(4.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 3.r,
+            spreadRadius: 5.r,
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          ImageFade(
+            height: 80.h,
+            width: 80.h,
+            fit: BoxFit.cover,
+            image: NetworkImage(
+              order.product?.mainImage ?? '',
+            ),
+            loadingBuilder: (context, progress, chunkEvent) => Center(
+              child: SizedBox(
+                width: 15.h,
+                height: 15.h,
+                child: CircularProgressIndicator(
+                  strokeWidth: 1,
                   color: Get.theme.primaryColor,
                 ),
               ),
-            ],
+            ),
+            errorBuilder: (context, error) => Center(
+              child: Icon(
+                Icons.broken_image_rounded,
+                color: Colors.black,
+                size: 15.h,
+              ),
+            ),
           ),
-        ),
-        5.horizontalSpace,
-        SvgPicture.asset(
-          '${Constants.assetsVectorsPath}delete.svg',
-          width: 18.h,
-          height: 18.h,
-        ),
-      ],
+          15.horizontalSpace,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  order.product?.nameAr ?? '',
+                  style: TextStyle(
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                10.verticalSpace,
+                Text(
+                  order.product?.descriptionAr ?? '',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                  ),
+                ),
+                5.verticalSpace,
+                Text(
+                  '${order.product?.price ?? 0}.س',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Get.theme.primaryColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

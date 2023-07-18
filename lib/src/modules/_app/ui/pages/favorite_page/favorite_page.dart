@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sezon/src/config/constants.dart';
 import 'package:sezon/src/modules/_app/ui/pages/favorite_page/favorite_page_controller.dart';
-import 'package:sezon/src/modules/_app/ui/pages/home_page/home_page_controller.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/custom_app_bar_widget.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/failure_widget.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/favorite_widget.dart';
@@ -20,8 +19,8 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   // controller.
-  late final HomePageController _homePageController =
-      Get.find<HomePageController>();
+  late final FavoritePageController _favoritePageController =
+      Get.find<FavoritePageController>();
 
   // dispose.
   @override
@@ -39,7 +38,7 @@ class _FavoritePageState extends State<FavoritePage> {
         leading: const Center(
           child: UserAvatarWidget(),
         ),
-        title: 'الرئيسية',
+        title: 'المفضلة',
         actions: [
           SvgPicture.asset(
             '${Constants.assetsVectorsPath}notifications.svg',
@@ -49,41 +48,44 @@ class _FavoritePageState extends State<FavoritePage> {
           15.horizontalSpace,
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16.h),
-          child: GetBuilder<FavoritePageController>(
-            id: 'favorite',
-            builder: (controller) => controller.isFavoriteLoading
-                ? Center(
-                    child: SpinKitFadingCube(
-                      color: Get.theme.primaryColor,
-                      size: 18.r,
-                    ),
-                  )
-                : controller.isFavoriteLoadingFailed
-                    ? Center(
-                        child: FailureWidget(
-                          onTap: controller.refreshFavorite,
-                        ),
-                      )
-                    : ListView.separated(
-                        itemCount: controller.products.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        separatorBuilder: (_, index) => Column(
-                          children: [
-                            5.verticalSpace,
-                            const Divider(),
-                            5.verticalSpace,
-                          ],
-                        ),
-                        itemBuilder: (_, index) => FavoriteWidget(
-                          product: controller.products[index],
-                          onDeleteFinished: controller.refreshFavorite,
-                        ),
+      body: Container(
+        padding: EdgeInsets.all(16.h),
+        child: GetBuilder<FavoritePageController>(
+          id: 'favorite',
+          builder: (controller) => controller.isFavoriteLoading
+              ? Center(
+                  child: SpinKitFadingCube(
+                    color: Get.theme.primaryColor,
+                    size: 18.r,
+                  ),
+                )
+              : controller.isFavoriteLoadingFailed
+                  ? Center(
+                      child: FailureWidget(
+                        onTap: controller.refreshFavorite,
                       ),
-          ),
+                    )
+                  : controller.products.isEmpty
+                      ? const Center(
+                          child: Text('المفضلة فارغة'),
+                        )
+                      : RefreshIndicator(
+                          onRefresh: _favoritePageController.refreshFavorite,
+                          child: ListView.separated(
+                            itemCount: controller.products.length,
+                            separatorBuilder: (_, index) => Column(
+                              children: [
+                                5.verticalSpace,
+                                const Divider(),
+                                5.verticalSpace,
+                              ],
+                            ),
+                            itemBuilder: (_, index) => FavoriteWidget(
+                              product: controller.products[index],
+                              onDeleteFinished: controller.refreshFavorite,
+                            ),
+                          ),
+                        ),
         ),
       ),
     );

@@ -11,17 +11,19 @@ class AppUser {
   String? phone;
 
   AppUser({
+    this.uid,
     required this.name,
     required this.phone,
   });
 
   factory AppUser.fromJson(Map<String, dynamic> json) => AppUser(
+        uid: json['uid'],
         name: json['name'],
         phone: json['phone'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": uid,
+        "uid": uid,
         "name": name,
         "phone": phone,
       };

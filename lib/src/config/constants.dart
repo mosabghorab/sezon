@@ -80,5 +80,6 @@ class Constants {
   //||... firebase firestore collections ...||
   static const String firebaseFirestoreCollectionUsers = 'users';
   static const String firebaseFirestoreCollectionFavorites = 'favorites';
+  static const String firebaseFirestoreCollectionOrders = 'orders';
 //||... firebase firestore collections ...||
 }

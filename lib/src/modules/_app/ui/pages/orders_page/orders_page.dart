@@ -38,7 +38,7 @@ class _OrdersPageState extends State<OrdersPage> {
         leading: const Center(
           child: UserAvatarWidget(),
         ),
-        title: 'الرئيسية',
+        title: 'طلباتي',
         actions: [
           SvgPicture.asset(
             '${Constants.assetsVectorsPath}notifications.svg',
@@ -48,38 +48,37 @@ class _OrdersPageState extends State<OrdersPage> {
           15.horizontalSpace,
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(16.h),
-          child: GetBuilder<OrdersPageController>(
-            id: 'favorite',
-            builder: (controller) => controller.isFavoriteLoading
-                ? Center(
-                    child: SpinKitFadingCube(
-                      color: Get.theme.primaryColor,
-                      size: 18.r,
-                    ),
-                  )
-                : controller.isFavoriteLoadingFailed
-                    ? Center(
-                        child: FailureWidget(
-                          onTap: controller.refreshFavorite,
-                        ),
-                      )
-                    : ListView.separated(
-                        itemCount: 3,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        separatorBuilder: (_, index) => Column(
-                          children: [
-                            5.verticalSpace,
-                            const Divider(),
-                            5.verticalSpace,
-                          ],
-                        ),
-                        itemBuilder: (_, index) => const OrderWidget(),
+      body: Container(
+        padding: EdgeInsets.all(16.h),
+        child: GetBuilder<OrdersPageController>(
+          id: 'orders',
+          builder: (controller) => controller.isOrdersLoading
+              ? Center(
+                  child: SpinKitFadingCube(
+                    color: Get.theme.primaryColor,
+                    size: 18.r,
+                  ),
+                )
+              : controller.isOrdersLoadingFailed
+                  ? Center(
+                      child: FailureWidget(
+                        onTap: controller.refreshOrders,
                       ),
-          ),
+                    )
+                  : controller.orders.isEmpty
+                      ? const Center(
+                          child: Text('لا يوجد طلبات'),
+                        )
+                      : RefreshIndicator(
+                          onRefresh: _ordersPageController.refreshOrders,
+                          child: ListView.separated(
+                            itemCount: _ordersPageController.orders.length,
+                            separatorBuilder: (_, index) => 15.verticalSpace,
+                            itemBuilder: (_, index) => OrderWidget(
+                              order: _ordersPageController.orders[index],
+                            ),
+                          ),
+                        ),
         ),
       ),
     );

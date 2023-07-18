@@ -21,7 +21,7 @@ class FavoriteWidget extends StatelessWidget {
     return Row(
       children: [
         Image.network(
-          'https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg?auto=compress&cs=tinysrgb&w=800',
+          product.mainImage ?? '',
           height: 80.h,
           width: 80.h,
           fit: BoxFit.cover,
@@ -34,7 +34,7 @@ class FavoriteWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'خزف ملون صنع يدوي',
+                product.nameAr ?? '',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -42,14 +42,14 @@ class FavoriteWidget extends StatelessWidget {
               ),
               10.verticalSpace,
               Text(
-                'هذا النص هو مثال لنص يمكن أن يستبدل توليد هذا النص من مولد النص العربى...',
+                product.descriptionAr ?? '',
                 style: TextStyle(
                   fontSize: 14.sp,
                 ),
               ),
               5.verticalSpace,
               Text(
-                '190ر.س',
+                '${product.price}ر.س',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,

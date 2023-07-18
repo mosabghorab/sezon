@@ -15,10 +15,17 @@ class ProductsService {
       _instance ?? (_instance = ProductsService._());
 
   // get products.
-  Future<List<Product>?> getProducts() async {
+  Future<List<Product>?> getProducts({
+    String? categoryId,
+  }) async {
     try {
+      Query<Map<String, dynamic>> collection =
+          _firebaseFirestore.collection('products');
+      if (categoryId != null) {
+        collection = collection.where('categoryId', isEqualTo: categoryId);
+      }
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firebaseFirestore.collection('products').get();
+          await collection.get();
       return querySnapshot.docs
           .map((e) => Product.fromJson(e.data())..id = e.id)
           .toList();

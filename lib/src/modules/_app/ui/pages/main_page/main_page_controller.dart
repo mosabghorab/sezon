@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:sezon/src/modules/_app/ui/pages/categories_page/categories_page.dart';
+import 'package:sezon/src/modules/_app/ui/pages/categories_page/categories_page_controller.dart';
 import 'package:sezon/src/modules/_app/ui/pages/favorite_page/favorite_page.dart';
 import 'package:sezon/src/modules/_app/ui/pages/favorite_page/favorite_page_controller.dart';
 import 'package:sezon/src/modules/_app/ui/pages/home_page/home_page.dart';
@@ -45,22 +47,24 @@ class MainPageController extends GetxController {
           return const HomePage();
         }),
         Builder(builder: (context) {
-          Get.put<FavoritePageController>(FavoritePageController());
-          return const FavoritePage();
+          Get.put<CategoriesPageController>(CategoriesPageController());
+          return const CategoriesPage();
         }),
         Builder(builder: (context) {
           Get.put<OrdersPageController>(OrdersPageController());
           return const OrdersPage();
         }),
-        // ChangeNotifierProvider<ChatsScreenController>(
-        //   create: (_) => ChatsScreenController(),
-        //   child: const ChatsScreen(),
-        // ),
-        // ChangeNotifierProvider<MyListingScreenController>(
-        //   create: (_) => MyListingScreenController(),
-        //   child: const MyListingScreen(),
-        // ),
+        Builder(builder: (context) {
+          Get.put<FavoritePageController>(FavoritePageController());
+          return const FavoritePage();
+        }),
       ];
+
+  @override
+  void onInit() {
+    selectedPageIndex = Get.arguments?['initialIndex'] ?? 0;
+    super.onInit();
+  }
 
   // on bottom nav bar tapped.
   void onBottomTapBarTapped(int index) {

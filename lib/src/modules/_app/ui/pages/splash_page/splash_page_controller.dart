@@ -18,9 +18,9 @@ class SplashPageController extends GetxController {
     SharedPreferencesManager.instance.getUserData();
     Future.delayed(const Duration(seconds: 2)).then((value) {
       if (SharedData.currentUser == null) {
-        Get.toNamed(AuthRouter.signIn);
+        Get.offAllNamed(AuthRouter.signIn);
       } else {
-        Get.toNamed(AppRouter.main);
+        Get.offAllNamed(AppRouter.main);
       }
     });
   }

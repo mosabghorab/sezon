@@ -5,7 +5,7 @@ import 'package:sezon/src/modules/_app/ui/data/data_sources/remote_data_source/f
 import 'package:sezon/src/modules/_app/ui/data/models/category.dart';
 import 'package:sezon/src/modules/_app/ui/data/models/product.dart';
 
-class HomePageController extends GetxController {
+class CategoriesPageController extends GetxController {
   // notifiable.
   void notifyCategories() {
     update(['categories']);
@@ -25,20 +25,23 @@ class HomePageController extends GetxController {
   bool isProductsLoading = true;
   bool isProductsLoadingFailed = false;
 
+  // selected category index.
+  int selectedCategoryIndex = 0;
+
   // data.
   List<Category> categories = [];
   List<Product> products = [];
 
   // on init.
   @override
-  void onInit() {
-    getCategories();
-    getProducts();
+  void onInit() async {
+    await getCategories();
+    await getProducts();
     super.onInit();
   }
 
   // get categories.
-  void getCategories({
+  Future<void> getCategories({
     bool notifyLoading = false,
   }) async {
     try {
@@ -67,7 +70,7 @@ class HomePageController extends GetxController {
   }
 
   // get products.
-  void getProducts({
+  Future<void> getProducts({
     bool notifyLoading = false,
   }) async {
     try {
@@ -76,7 +79,9 @@ class HomePageController extends GetxController {
         isProductsLoadingFailed = false;
         notifyProducts();
       }
-      List<Product>? products = await _productsService.getProducts();
+      List<Product>? products = await _productsService.getProducts(
+        categoryId: categories[selectedCategoryIndex].id,
+      );
       if (products != null) {
         // success.
         this.products = products;
@@ -95,19 +100,22 @@ class HomePageController extends GetxController {
     }
   }
 
-  // refresh categories.\
+  // on category selected.
+  void onCategorySelected({
+    required int index,
+  }) {
+    selectedCategoryIndex = index;
+    notifyCategories();
+    refreshProducts();
+  }
+
+  // refresh categories.
   void refreshCategories() {
     getCategories(notifyLoading: true);
   }
 
   // refresh products.
-  void refreshProducts() {
+  Future<void> refreshProducts() async {
     getProducts(notifyLoading: true);
-  }
-
-  // refresh all.
-  Future<void> refreshAll() async {
-    refreshCategories();
-    refreshProducts();
   }
 }

@@ -49,7 +49,8 @@ class CustomAppBarWidget extends StatelessWidget
                 ),
               ),
       leadingWidth: leadingWidth,
-      leading: leading ?? const BackButton(),
+      leading: leading ??
+          (Navigator.canPop(context) ? const BackButton() : const SizedBox()),
       actions: actions,
       bottom: bottom,
     );
