@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sezon/src/config/constants.dart';
+import 'package:sezon/src/modules/_app/ui/data/models/product.dart';
 import 'package:sezon/src/modules/_app/ui/pages/home_page/home_page_controller.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/category_widget.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/custom_app_bar_widget.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/custom_search_text_field_widget.dart';
+import 'package:sezon/src/modules/_app/ui/widgets/failure_widget.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/product_widget.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/user_avatar_widget.dart';
 
@@ -26,8 +29,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    _homePageController.dispose();
-    Get.delete<HomePageController>();
+    // _homePageController.dispose();
+    // Get.delete<HomePageController>();
     super.dispose();
   }
 
@@ -79,13 +82,29 @@ class _HomePageState extends State<HomePage> {
               10.verticalSpace,
               SizedBox(
                 height: 70.h,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  separatorBuilder: (_, index) => SizedBox(
-                    width: 15.w,
-                  ),
-                  itemBuilder: (_, index) => const CategoryWidget(),
+                child: GetBuilder<HomePageController>(
+                  id: 'categories',
+                  builder: (controller) => controller.isCategoriesLoading
+                      ? Center(
+                          child: SpinKitFadingCube(
+                            color: Get.theme.primaryColor,
+                            size: 18.r,
+                          ),
+                        )
+                      : controller.isCategoriesLoadingFailed
+                          ? Center(
+                              child: FailureWidget(
+                                onTap: controller.refreshCategories,
+                              ),
+                            )
+                          : ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: controller.categories.length,
+                              separatorBuilder: (_, index) => SizedBox(
+                                width: 15.w,
+                              ),
+                              itemBuilder: (_, index) => const CategoryWidget(),
+                            ),
                 ),
               ),
               15.verticalSpace,
@@ -111,17 +130,42 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               10.verticalSpace,
-              GridView.builder(
-                itemCount: 8,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisExtent: 200.h,
-                  mainAxisSpacing: 10.h,
-                  crossAxisSpacing: 10.w,
-                ),
-                itemBuilder: (_, index) => const ProductWidget(),
+              GetBuilder<HomePageController>(
+                id: 'products',
+                builder: (controller) => controller.isProductsLoading
+                    ? Center(
+                        child: SpinKitFadingCube(
+                          color: Get.theme.primaryColor,
+                          size: 18.r,
+                        ),
+                      )
+                    : controller.isProductsLoadingFailed
+                        ? Center(
+                            child: FailureWidget(
+                              onTap: controller.refreshProducts,
+                            ),
+                          )
+                        : GridView.builder(
+                            itemCount: controller.products.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisExtent: 200.h,
+                              mainAxisSpacing: 10.h,
+                              crossAxisSpacing: 10.w,
+                            ),
+                            itemBuilder: (_, index) => Builder(
+                              builder: (context) {
+                                Get.put<Product>(controller.products[index],
+                                    tag: controller.products[index].id);
+                                return ProductWidget(
+                                  tag: controller.products[index].id!,
+                                );
+                              },
+                            ),
+                          ),
               ),
             ],
           ),

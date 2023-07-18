@@ -8,17 +8,18 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:sezon/src/config/core/enums.dart';
 import 'package:sezon/src/managers/shared_preferences_manager.dart';
+import 'package:sezon/src/modules/_app/ui/widgets/confirmation_widget.dart';
+import 'package:sezon/src/modules/_app/ui/widgets/loading_widget.dart';
 
 class Helpers {
   // show message.
   static void showMessage({
-    required BuildContext context,
     required String text,
     required MessageType messageType,
     bool persistent = true,
   }) {
     showFlash(
-      context: context,
+      context: Get.context!,
       persistent: persistent,
       duration: const Duration(seconds: 3),
       builder: (_, controller) {
@@ -39,7 +40,7 @@ class Helpers {
           onTap: () => controller.dismiss(),
           forwardAnimationCurve: Curves.ease,
           reverseAnimationCurve: Curves.bounceIn,
-          position: FlashPosition.top,
+          alignment: Alignment.bottomCenter,
           child: DefaultTextStyle(
             style: TextStyle(
               color: Colors.white,
@@ -62,7 +63,7 @@ class Helpers {
               primaryAction: TextButton(
                 onPressed: () => controller.dismiss(),
                 child: Text(
-                  'Dismiss'.tr,
+                  'تجاهل',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: Helpers.getFontFamily(),
@@ -107,35 +108,39 @@ class Helpers {
   }
 
   // show loading dialog.
-  // static void showLoadingDialog({
-  //   required BuildContext context,
-  //   String? title,
-  // }) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (_) => LoadingDialogComponent(
-  //       title: title,
-  //     ),
-  //     barrierDismissible: false,
-  //   );
-  // }
+  static void showLoading({
+    String? title,
+  }) {
+    showDialog(
+      context: Get.context!,
+      builder: (_) => LoadingWidget(
+        title: title,
+      ),
+      barrierDismissible: false,
+    );
+  }
 
-  // show confirmation dialog.
-  // static void showConfirmationDialog({
-  //   required final BuildContext context,
-  //   required final String description,
-  //   required final String confirmText,
-  //   required final void Function() onConfirm,
-  // }) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (_) => ConfirmationDialogComponent(
-  //       description: description,
-  //       confirmText: confirmText,
-  //       onConfirm: onConfirm,
-  //     ),
-  //   );
-  // }
+  // show confirmation.
+  static void showConfirmation({
+    required final String title,
+    required final String description,
+    required final String confirmText,
+    final String? iconName,
+    Color? buttonColor,
+    required final void Function() onConfirm,
+  }) {
+    showDialog(
+      context: Get.context!,
+      builder: (_) => ConfirmationWidget(
+        title: title,
+        description: description,
+        confirmText: confirmText,
+        iconName: iconName,
+        onConfirm: onConfirm,
+        buttonColor: buttonColor,
+      ),
+    );
+  }
 
   // check if the user is signed in or not.
   // static bool checkAuth({

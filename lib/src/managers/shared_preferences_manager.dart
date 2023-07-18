@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:sezon/src/config/constants.dart';
+import 'package:sezon/src/config/shared_data.dart';
+import 'package:sezon/src/modules/auth/data/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesManager {
@@ -33,23 +35,21 @@ class SharedPreferencesManager {
   }
 
   //||...  get the current user data ...||
-  // User? getUserData() {
-  //   String? userJson =
-  //       _sharedPreferences!.getString(Constants.sharedPreferencesUserData);
-  //   if (userJson == null) return null;
-  //   return SharedData.currentUser = userFromStringJson(userJson);
-  // }
+  AppUser? getUserData() {
+    String? userJson =
+        _sharedPreferences!.getString(Constants.sharedPreferencesUserData);
+    if (userJson == null) return null;
+    return SharedData.currentUser = userFromStringJson(userJson);
+  }
 
   //||...  set the current user data ...||
-  // Future<void> setUserData(User user) async {
-  //   SharedData.currentUser = user;
-  //   await _sharedPreferences!.setString(
-  //     Constants.sharedPreferencesUserData,
-  //     userToStringJson(user),
-  //   );
-  //   // re init api to get the user auth token.
-  //   Api.init();
-  // }
+  Future<void> setUserData(AppUser user) async {
+    SharedData.currentUser = user;
+    await _sharedPreferences!.setString(
+      Constants.sharedPreferencesUserData,
+      userToStringJson(user),
+    );
+  }
 
   //||...  is notifications enabled ...||
   // Future<void> setIsNotificationsEnabled(bool isNotificationsEnabled) async {

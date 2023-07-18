@@ -16,24 +16,22 @@ class UsersService {
       _instance ?? (_instance = UsersService._());
 
   // create a user and get it.
-  Future<AppUser?> createUser({
+  Future<void> createUser({
     required String uid,
     required String name,
     required String phone,
   }) async {
     try {
       await _firebaseFirestore
-          .collection(Constants.firebaseFirestoreCollecitonUsers)
+          .collection(Constants.firebaseFirestoreCollectionUsers)
           .doc(uid)
           .set({
         'name': name,
         'phone': phone,
       });
-      return await getUser(uid: uid);
     } catch (error) {
       // error.
       debugPrint('error : $error');
-      return null;
     }
   }
 
@@ -44,10 +42,29 @@ class UsersService {
     try {
       DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
           await _firebaseFirestore
-              .collection(Constants.firebaseFirestoreCollecitonUsers)
+              .collection(Constants.firebaseFirestoreCollectionUsers)
               .doc(uid)
               .get();
-      return AppUser.fromJson(documentSnapshot.data()!);
+      return AppUser.fromJson(documentSnapshot.data()!)
+        ..uid = documentSnapshot.id;
+    } catch (error) {
+      // error.
+      debugPrint('error : $error');
+      return null;
+    }
+  }
+
+  // check user with phone.
+  Future<bool?> checkUserWithPhone({
+    required String phone,
+  }) async {
+    try {
+      QuerySnapshot querySnapshot = await _firebaseFirestore
+          .collection(Constants.firebaseFirestoreCollectionUsers)
+          .where('phone', isEqualTo: phone)
+          .limit(1)
+          .get();
+      return querySnapshot.docs.isNotEmpty;
     } catch (error) {
       // error.
       debugPrint('error : $error');

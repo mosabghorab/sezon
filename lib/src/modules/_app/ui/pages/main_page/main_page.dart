@@ -50,8 +50,10 @@ class _MainPageState extends State<MainPage> {
                 ),
               )),
       body: GetBuilder<MainPageController>(
+        key: UniqueKey(),
         id: 'selectedPageIndex',
-        builder: (controller) => controller.pages[controller.selectedPageIndex],
+        builder: (controller) =>
+            controller.pages()[controller.selectedPageIndex],
       ),
     );
   }

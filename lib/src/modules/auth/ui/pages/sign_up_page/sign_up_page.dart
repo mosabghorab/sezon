@@ -31,95 +31,100 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Image.asset(
-                  '${Constants.assetsImagesPath}background.png',
-                ),
-                PositionedDirectional(
-                  top: 70.h,
-                  start: 0,
-                  end: 0,
-                  child: Center(
-                    child: Image.asset(
-                      '${Constants.assetsImagesPath}logo.png',
-                      height: 80.h,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              'إنشاء حساب جديد',
-              style: TextStyle(
-                fontSize: 22.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            Container(
-              padding: EdgeInsets.all(24.h),
-              child: Column(
+        child: Form(
+          key: _signUpPageController.formKey,
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  const CustomTextFieldWidget(
-                    title: 'اسم المستخدم',
-                    hintText: 'ادخل اسم المستخدم',
+                  Image.asset(
+                    '${Constants.assetsImagesPath}background.png',
                   ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  const CustomTextFieldWidget(
-                    title: 'رقم الهاتف',
-                    hintText: 'ادخل رقم الهاتف',
-                  ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  const CustomTextFieldWidget(
-                    title: 'كلمة المرور',
-                    hintText: 'ادخل كلمة المرور',
-                  ),
-                  SizedBox(
-                    height: 15.h,
-                  ),
-                  const CustomTextFieldWidget(
-                    title: 'تأكيد كلمة المرور',
-                    hintText: 'ادخل تأكيد كلمة المرور',
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  CustomButtonWidget(
-                    title: 'تسجيل حساب',
-                    onTap: () {},
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('هل لديك حساب؟ '),
-                      InkWell(
-                        onTap: _signUpPageController.navigateBackToSignInPage,
-                        child: Text(
-                          'تسجيل دخول',
-                          style: TextStyle(
-                            color: Get.theme.primaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
+                  PositionedDirectional(
+                    top: 70.h,
+                    start: 0,
+                    end: 0,
+                    child: Center(
+                      child: Image.asset(
+                        '${Constants.assetsImagesPath}logo.png',
+                        height: 80.h,
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              Text(
+                'إنشاء حساب جديد',
+                style: TextStyle(
+                  fontSize: 22.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              Container(
+                padding: EdgeInsets.all(24.h),
+                child: Column(
+                  children: [
+                    CustomTextFieldWidget(
+                      title: 'الاسم',
+                      hintText: 'ادخل الاسم',
+                      keyboardType: TextInputType.name,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'الاسم مطلوب';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _signUpPageController.name = value,
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    CustomTextFieldWidget(
+                      title: 'رقم الهاتف',
+                      hintText: 'ادخل رقم الهاتف',
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'رقم الهاتف مطلوب';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _signUpPageController.phone = value,
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    CustomButtonWidget(
+                      title: 'تسجيل حساب',
+                      onTap: _signUpPageController.signUp,
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('هل لديك حساب؟ '),
+                        InkWell(
+                          onTap: _signUpPageController.navigateBackToSignInPage,
+                          child: Text(
+                            'تسجيل دخول',
+                            style: TextStyle(
+                              color: Get.theme.primaryColor,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

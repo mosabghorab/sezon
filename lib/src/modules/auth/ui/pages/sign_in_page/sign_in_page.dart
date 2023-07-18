@@ -31,83 +31,94 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Image.asset(
-                  '${Constants.assetsImagesPath}background.png',
-                ),
-                PositionedDirectional(
-                  top: 70.h,
-                  start: 0,
-                  end: 0,
-                  child: Center(
-                    child: Image.asset(
-                      '${Constants.assetsImagesPath}logo.png',
-                      height: 80.h,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              'تسجيل دخول',
-              style: TextStyle(
-                fontSize: 22.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
-            Container(
-              padding: EdgeInsets.all(24.h),
-              child: Column(
+        child: Form(
+          key: _signInPageController.formKey,
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  const CustomTextFieldWidget(
-                    title: 'رقم الهاتف',
-                    hintText: 'ادخل رقم الهاتف',
+                  Image.asset(
+                    '${Constants.assetsImagesPath}background.png',
                   ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text('هل نسيت كلمة المرور؟'),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  CustomButtonWidget(
-                    title: 'تسجيل الدخول',
-                    onTap: _signInPageController.signIn,
-                  ),
-                  SizedBox(
-                    height: 30.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('ليس لديك حساب؟ '),
-                      InkWell(
-                        onTap: _signInPageController.navigateToSignUpPage,
-                        child: Text(
-                          'حساب جديد',
-                          style: TextStyle(
-                            color: Get.theme.primaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
+                  PositionedDirectional(
+                    top: 70.h,
+                    start: 0,
+                    end: 0,
+                    child: Center(
+                      child: Image.asset(
+                        '${Constants.assetsImagesPath}logo.png',
+                        height: 80.h,
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              Text(
+                'تسجيل دخول',
+                style: TextStyle(
+                  fontSize: 22.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              Container(
+                padding: EdgeInsets.all(24.h),
+                child: Column(
+                  children: [
+                    CustomTextFieldWidget(
+                      title: 'رقم الهاتف',
+                      hintText: 'ادخل رقم الهاتف',
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'رقم الهاتف مطلوب';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _signInPageController.phone = value,
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text('هل نسيت كلمة المرور؟'),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    CustomButtonWidget(
+                      title: 'تسجيل الدخول',
+                      onTap: _signInPageController.signIn,
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('ليس لديك حساب؟ '),
+                        InkWell(
+                          onTap: _signInPageController.navigateToSignUpPage,
+                          child: Text(
+                            'حساب جديد',
+                            style: TextStyle(
+                              color: Get.theme.primaryColor,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

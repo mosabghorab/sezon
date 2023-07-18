@@ -78,6 +78,7 @@ class Constants {
   //||... firebase dynamic links ...||
 
   //||... firebase firestore collections ...||
-  static const String firebaseFirestoreCollecitonUsers = 'users';
+  static const String firebaseFirestoreCollectionUsers = 'users';
+  static const String firebaseFirestoreCollectionFavorites = 'favorites';
 //||... firebase firestore collections ...||
 }

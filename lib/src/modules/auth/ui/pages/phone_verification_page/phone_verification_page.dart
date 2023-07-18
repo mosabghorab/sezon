@@ -109,7 +109,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                         onChanged: (String value) {},
                         onCompleted: (value) {
                           _phoneVerificationPageController.otp = value;
-                          _phoneVerificationPageController.verifyOtp();
+                          _phoneVerificationPageController.verifyCode();
                         },
                       ),
                     ),
@@ -117,7 +117,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                   50.verticalSpace,
                   CustomButtonWidget(
                     title: 'أرسل',
-                    onTap: _phoneVerificationPageController.verifyOtp,
+                    onTap: _phoneVerificationPageController.verifyCode,
                   ),
                 ],
               ),

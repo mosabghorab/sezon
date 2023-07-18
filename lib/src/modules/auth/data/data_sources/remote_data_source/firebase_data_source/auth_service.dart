@@ -18,7 +18,7 @@ class AuthService {
   // send code.
   Future<void> sendCode({
     required String phoneNumber,
-    required Function(AuthCredential) verificationCompleted,
+    required Function(PhoneAuthCredential) verificationCompleted,
     required Function(FirebaseAuthException) verificationFailed,
     required Function(String, int?) codeSent,
     required Function(String) codeAutoRetrievalTimeout,
@@ -47,11 +47,16 @@ class AuthService {
       );
       UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
+      if (userCredential.user == null ||
+          userCredential.user!.phoneNumber == null) {
+        return null;
+      }
       AppUser? user =
           await _usersService.getUser(uid: userCredential.user!.uid);
       if (user == null) {
-        return await _usersService.createUser(
+        await _usersService.createUser(
             uid: userCredential.user!.uid, name: name!, phone: phone!);
+        return await _usersService.getUser(uid: userCredential.user!.uid);
       } else {
         return user;
       }
