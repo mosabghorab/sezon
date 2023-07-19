@@ -44,7 +44,7 @@ class UsersService {
       await _firebaseFirestore
           .collection(Constants.firebaseFirestoreCollectionUsers)
           .doc(SharedData.currentUser!.uid)
-          .set({
+          .update({
         'name': name,
       });
       return getUser(uid: SharedData.currentUser!.uid!);

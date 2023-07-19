@@ -28,8 +28,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    // _homePageController.dispose();
-    // Get.delete<HomePageController>();
+    // _categoriesPageController.dispose();
+    // Get.delete<CategoriesPageController>();
     super.dispose();
   }
 
@@ -130,7 +130,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
-                                    mainAxisExtent: 140.h,
+                                    mainAxisExtent: 150.h,
                                     mainAxisSpacing: 10.h,
                                     crossAxisSpacing: 10.w,
                                   ),

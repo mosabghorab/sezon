@@ -136,8 +136,8 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   itemBuilder: (_, index) => Builder(
                                     builder: (context) {
-                                      Get.put<Product>(
-                                          controller.products[index],
+                                      Get.create<Product>(
+                                          () => controller.products[index],
                                           tag: controller.products[index].id);
                                       return ProductWidget(
                                         tag: controller.products[index].id!,

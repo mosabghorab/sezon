@@ -80,4 +80,25 @@ class FavoritesService {
       return null;
     }
   }
+
+  // get favorite by product id.
+  Future<Favorite?> getFavoriteByProductId({
+    required String productId,
+  }) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore
+              .collection('favorites')
+              .where('productId', isEqualTo: productId)
+              .limit(1)
+              .get();
+      if (querySnapshot.docs.isEmpty) return null;
+      return Favorite.fromJson(querySnapshot.docs.first.data())
+        ..id = querySnapshot.docs.first.id;
+    } catch (error) {
+      // error.
+      debugPrint('error : $error');
+      return null;
+    }
+  }
 }

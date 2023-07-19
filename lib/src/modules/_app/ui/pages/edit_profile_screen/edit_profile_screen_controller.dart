@@ -29,7 +29,7 @@ class EditProfileScreenController with ChangeNotifier {
     Get.back();
     if (appUser != null) {
       await SharedPreferencesManager.instance.setUserData(appUser);
-      Get.offAllNamed(AppRouter.navbarPage);
+      Get.back();
     } else {
       Helpers.showMessage(
           text: 'حدث خطأ ما', messageType: MessageType.failureMessage);
