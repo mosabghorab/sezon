@@ -31,6 +31,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const CustomAppBarWidget(
         title: 'إتمام عملية الشراء',
       ),

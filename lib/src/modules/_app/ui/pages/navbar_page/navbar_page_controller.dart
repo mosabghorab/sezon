@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sezon/src/modules/_app/ui/pages/home_page/home_page.dart';
 import 'package:sezon/src/modules/_app/ui/pages/home_page/home_page_controller.dart';
+import 'package:sezon/src/modules/_app/ui/pages/settings_page/settings_page.dart';
+import 'package:sezon/src/modules/_app/ui/pages/settings_page/settings_page_controller.dart';
 import 'package:sezon/src/modules/products/ui/pages/categories_page/categories_page.dart';
 import 'package:sezon/src/modules/products/ui/pages/categories_page/categories_page_controller.dart';
 import 'package:sezon/src/modules/products/ui/pages/favorite_page/favorite_page.dart';
@@ -38,6 +40,10 @@ class NavbarPageController extends GetxController {
       'title': 'المفضلة',
       'icon': 'favorite',
     },
+    {
+      'title': 'الاعدادت',
+      'icon': 'settings',
+    },
   ];
 
   // pages.
@@ -57,6 +63,10 @@ class NavbarPageController extends GetxController {
     Builder(builder: (context) {
       Get.put<FavoritePageController>(FavoritePageController());
       return const FavoritePage();
+    }),
+    Builder(builder: (context) {
+      Get.put<SettingsPageController>(SettingsPageController());
+      return const SettingsPage();
     }),
   ];
 

@@ -78,13 +78,6 @@ class _SignInPageState extends State<SignInPage> {
                       },
                       onSaved: (value) => _signInPageController.phone = value,
                     ),
-                    10.verticalSpace,
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('هل نسيت كلمة المرور؟'),
-                      ],
-                    ),
                     30.verticalSpace,
                     CustomButtonWidget(
                       title: 'تسجيل الدخول',

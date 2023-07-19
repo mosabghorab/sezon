@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sezon/src/config/constants.dart';
+import 'package:sezon/src/config/shared_data.dart';
 import 'package:sezon/src/modules/auth/models/app_user.dart';
 
 class UsersService {
@@ -32,6 +33,25 @@ class UsersService {
     } catch (error) {
       // error.
       debugPrint('error : $error');
+    }
+  }
+
+  // edit user.
+  Future<AppUser?> editUser({
+    required String name,
+  }) async {
+    try {
+      await _firebaseFirestore
+          .collection(Constants.firebaseFirestoreCollectionUsers)
+          .doc(SharedData.currentUser!.uid)
+          .set({
+        'name': name,
+      });
+      return getUser(uid: SharedData.currentUser!.uid!);
+    } catch (error) {
+      // error.
+      debugPrint('error : $error');
+      return null;
     }
   }
 

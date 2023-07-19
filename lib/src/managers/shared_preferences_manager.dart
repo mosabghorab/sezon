@@ -84,10 +84,8 @@ class SharedPreferencesManager {
   }
 
 //||...  clear all user data ...||
-// Future<void> clearUserData() async {
-//   await _sharedPreferences!.remove(Constants.sharedPreferencesUserData);
-//   SharedData.currentUser = null;
-//   // init api.
-//   Api.init();
-// }
+  Future<void> clearUserData() async {
+    await _sharedPreferences!.remove(Constants.sharedPreferencesUserData);
+    SharedData.currentUser = null;
+  }
 }

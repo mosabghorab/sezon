@@ -21,9 +21,6 @@ class _AddOrderDetailsWidgetState extends State<AddOrderDetailsWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.h),
-      margin: EdgeInsets.only(
-        bottom: Get.mediaQuery.viewInsets.bottom,
-      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(

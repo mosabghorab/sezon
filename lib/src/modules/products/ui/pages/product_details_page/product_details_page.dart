@@ -155,7 +155,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     10.verticalSpace,
                     SizedBox(
-                      height: 140.h,
+                      height: 150.h,
                       child: GetBuilder<ProductDetailsPageController>(
                         id: 'suggestedProducts',
                         tag: _productDetailsPageController.product.id,
