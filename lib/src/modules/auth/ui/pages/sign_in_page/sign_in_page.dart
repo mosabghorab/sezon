@@ -68,7 +68,8 @@ class _SignInPageState extends State<SignInPage> {
                     CustomTextFieldWidget(
                       title: 'رقم الهاتف',
                       hintText: 'ادخل رقم الهاتف',
-                      keyboardType: TextInputType.text,
+                      isMobile: true,
+                      keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'رقم الهاتف مطلوب';
