@@ -60,9 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                height: 15.h,
-              ),
+              15.verticalSpace,
               Container(
                 padding: EdgeInsets.all(24.h),
                 child: Column(
@@ -79,9 +77,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                       onSaved: (value) => _signUpPageController.name = value,
                     ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
+                    15.verticalSpace,
                     CustomTextFieldWidget(
                       title: 'رقم الهاتف',
                       hintText: 'ادخل رقم الهاتف',
@@ -94,16 +90,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                       onSaved: (value) => _signUpPageController.phone = value,
                     ),
-                    SizedBox(
-                      height: 30.h,
-                    ),
+                    30.verticalSpace,
                     CustomButtonWidget(
                       title: 'تسجيل حساب',
                       onTap: _signUpPageController.signUp,
                     ),
-                    SizedBox(
-                      height: 30.h,
-                    ),
+                    30.verticalSpace,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

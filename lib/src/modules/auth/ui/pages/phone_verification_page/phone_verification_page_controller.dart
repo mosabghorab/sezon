@@ -5,22 +5,22 @@ import 'package:sezon/src/config/core/enums.dart';
 import 'package:sezon/src/config/helpers.dart';
 import 'package:sezon/src/managers/shared_preferences_manager.dart';
 import 'package:sezon/src/modules/_app/app_router.dart';
-import 'package:sezon/src/modules/auth/data/data_sources/remote_data_source/firebase_data_source/auth_service.dart';
-import 'package:sezon/src/modules/auth/data/models/user.dart';
+import 'package:sezon/src/modules/auth/data_sources/remote_data_source/firebase_data_source/auth_service.dart';
+import 'package:sezon/src/modules/auth/models/app_user.dart';
 
 class PhoneVerificationPageController extends GetxController {
   // services.
   late final AuthService _authService = AuthService.instance;
-
-  // arguments.
-  String? phone;
-  String? name;
 
   // fields.
   String? otp;
 
   // vars.
   String? verificationId;
+
+  // arguments.
+  String? phone;
+  String? name;
 
   // on init.
   @override
@@ -46,10 +46,6 @@ class PhoneVerificationPageController extends GetxController {
   void _verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
     try {
       Helpers.showLoading();
-      AuthCredential authCredential = PhoneAuthProvider.credential(
-        verificationId: verificationId!,
-        smsCode: otp!,
-      );
       AppUser? appUser = await _authService.signInWithPhone(
         verificationId: verificationId!,
         smsCode: otp!,
@@ -59,7 +55,7 @@ class PhoneVerificationPageController extends GetxController {
       if (appUser != null) {
         // success.
         Get.back();
-        Get.toNamed(AppRouter.main);
+        Get.toNamed(AppRouter.navbarPage);
       } else {
         // failed.
         Get.back();
@@ -122,7 +118,7 @@ class PhoneVerificationPageController extends GetxController {
         // success.
         Get.back();
         await SharedPreferencesManager.instance.setUserData(appUser);
-        Get.toNamed(AppRouter.main);
+        Get.toNamed(AppRouter.navbarPage);
       } else {
         // failed.
         Get.back();

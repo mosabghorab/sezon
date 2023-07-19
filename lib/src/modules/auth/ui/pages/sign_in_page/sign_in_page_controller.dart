@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sezon/src/config/core/enums.dart';
 import 'package:sezon/src/config/helpers.dart';
 import 'package:sezon/src/modules/auth/auth_router.dart';
-import 'package:sezon/src/modules/auth/data/data_sources/remote_data_source/firebase_data_source/users_service.dart';
+import 'package:sezon/src/modules/auth/data_sources/remote_data_source/firebase_data_source/users_service.dart';
 
 class SignInPageController extends GetxController {
   // form key.
@@ -29,7 +29,7 @@ class SignInPageController extends GetxController {
         // success.
         if (result) {
           Get.toNamed(
-            AuthRouter.phoneVerification,
+            AuthRouter.phoneVerificationPage,
             arguments: {
               'phone': phone,
             },
@@ -53,6 +53,6 @@ class SignInPageController extends GetxController {
 
   // void navigate to sign up page.
   void navigateToSignUpPage() {
-    Get.toNamed(AuthRouter.signUp);
+    Get.toNamed(AuthRouter.signUpPage);
   }
 }

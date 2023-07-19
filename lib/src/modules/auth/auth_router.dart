@@ -8,27 +8,27 @@ import 'package:sezon/src/modules/auth/ui/pages/sign_up_page/sign_up_page.dart';
 import 'package:sezon/src/modules/auth/ui/pages/sign_up_page/sign_up_page_controller.dart';
 
 class AuthRouter {
-  static const String signIn = '/SignIn';
-  static const String signUp = '/SignUp';
-  static const String phoneVerification = '/PhoneVerification';
+  static const String signInPage = '/SignInPage';
+  static const String signUpPage = '/SignUpPage';
+  static const String phoneVerificationPage = '/PhoneVerificationPage';
 
-  static List<GetPage> authRoutes = [
+  static List<GetPage> routes = [
     GetPage(
-      name: signIn,
+      name: signInPage,
       page: () => Builder(builder: (context) {
         Get.put<SignInPageController>(SignInPageController());
         return const SignInPage();
       }),
     ),
     GetPage(
-      name: signUp,
+      name: signUpPage,
       page: () => Builder(builder: (context) {
         Get.put<SignUpPageController>(SignUpPageController());
         return const SignUpPage();
       }),
     ),
     GetPage(
-      name: phoneVerification,
+      name: phoneVerificationPage,
       page: () => Builder(builder: (context) {
         Get.put<PhoneVerificationPageController>(
             PhoneVerificationPageController());

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CustomButtonWidget extends StatelessWidget {
   final String title;
@@ -23,7 +24,6 @@ class CustomButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(5.r),
@@ -37,9 +37,9 @@ class CustomButtonWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.r),
           border: isBordered
-              ? Border.all(color: color ?? themeData.primaryColor)
+              ? Border.all(color: color ?? Get.theme.primaryColor)
               : null,
-          color: isBordered ? null : color ?? themeData.primaryColor,
+          color: isBordered ? null : color ?? Get.theme.primaryColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

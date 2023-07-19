@@ -11,10 +11,17 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   // controller.
   late final SplashPageController _splashScreenController =
       Get.find<SplashPageController>();
+
+  // animations controllers.
+  late final AnimationController _scaleAnimationController =
+      AnimationController(
+          vsync: this, duration: const Duration(milliseconds: 800));
+  late final AnimationController _fadeAnimationController = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 800));
 
   // dispose.
   @override
@@ -22,6 +29,8 @@ class _SplashPageState extends State<SplashPage> {
     // dispose and delete controller to not get a memory leak party :).
     _splashScreenController.dispose();
     Get.delete<SplashPageController>();
+    _scaleAnimationController.dispose();
+    _fadeAnimationController.dispose();
     super.dispose();
   }
 
@@ -30,9 +39,17 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       backgroundColor: const Color(0xffEB5D1C),
       body: Center(
-        child: Image.asset(
-          '${Constants.assetsImagesPath}logo.png',
-          height: 170.h,
+        child: ScaleTransition(
+          scale: Tween<double>(begin: 0.0, end: 1.0)
+              .animate(_scaleAnimationController..forward()),
+          child: FadeTransition(
+            opacity: Tween<double>(begin: 0.0, end: 1.0)
+                .animate(_fadeAnimationController..forward()),
+            child: Image.asset(
+              '${Constants.assetsImagesPath}logo.png',
+              height: 170.h, // updated.
+            ),
+          ),
         ),
       ),
     );

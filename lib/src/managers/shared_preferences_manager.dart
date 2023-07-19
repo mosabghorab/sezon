@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:sezon/src/config/constants.dart';
 import 'package:sezon/src/config/shared_data.dart';
-import 'package:sezon/src/modules/auth/data/models/user.dart';
+import 'package:sezon/src/modules/auth/models/app_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesManager {
@@ -39,7 +39,7 @@ class SharedPreferencesManager {
     String? userJson =
         _sharedPreferences!.getString(Constants.sharedPreferencesUserData);
     if (userJson == null) return null;
-    return SharedData.currentUser = userFromStringJson(userJson);
+    return SharedData.currentUser = appUserFromStringJson(userJson);
   }
 
   //||...  set the current user data ...||
@@ -47,7 +47,7 @@ class SharedPreferencesManager {
     SharedData.currentUser = user;
     await _sharedPreferences!.setString(
       Constants.sharedPreferencesUserData,
-      userToStringJson(user),
+      appUserToStringJson(user),
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:sezon/src/config/core/enums.dart';
-import 'package:sezon/src/modules/auth/data/models/user.dart';
+
+import '../modules/auth/models/app_user.dart';
 
 class SharedData {
 //||... current_user ...||

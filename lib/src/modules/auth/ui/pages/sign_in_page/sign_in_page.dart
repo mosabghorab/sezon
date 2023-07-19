@@ -60,9 +60,7 @@ class _SignInPageState extends State<SignInPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                height: 15.h,
-              ),
+              15.verticalSpace,
               Container(
                 padding: EdgeInsets.all(24.h),
                 child: Column(
@@ -79,25 +77,19 @@ class _SignInPageState extends State<SignInPage> {
                       },
                       onSaved: (value) => _signInPageController.phone = value,
                     ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
+                    10.verticalSpace,
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text('هل نسيت كلمة المرور؟'),
                       ],
                     ),
-                    SizedBox(
-                      height: 30.h,
-                    ),
+                    30.verticalSpace,
                     CustomButtonWidget(
                       title: 'تسجيل الدخول',
                       onTap: _signInPageController.signIn,
                     ),
-                    SizedBox(
-                      height: 30.h,
-                    ),
+                    30.verticalSpace,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

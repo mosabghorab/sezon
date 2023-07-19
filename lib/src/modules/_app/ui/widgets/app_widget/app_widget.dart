@@ -31,7 +31,7 @@ class AppWidget extends GetView<AppWidgetController> {
           //     Constants.supportedLocales.keys.map((e) => Locale(e)),
           title: Constants.appName,
           getPages: AppRouter.routes,
-          initialRoute: AppRouter.splash,
+          initialRoute: AppRouter.splashPage,
         ),
       ),
     );

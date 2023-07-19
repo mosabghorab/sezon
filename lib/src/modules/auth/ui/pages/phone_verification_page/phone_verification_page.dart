@@ -58,9 +58,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
-              height: 15.h,
-            ),
+            15.verticalSpace,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 50.w),
               child: Text(
@@ -71,9 +69,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 15.h,
-            ),
+            15.verticalSpace,
             Container(
               padding: EdgeInsets.all(16.h),
               child: Column(

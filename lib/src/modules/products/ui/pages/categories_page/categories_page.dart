@@ -4,27 +4,25 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sezon/src/config/constants.dart';
-import 'package:sezon/src/modules/_app/ui/pages/home_page/home_page_controller.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/custom_app_bar_widget.dart';
-import 'package:sezon/src/modules/_app/ui/widgets/custom_search_text_field_widget.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/failure_widget.dart';
-import 'package:sezon/src/modules/_app/ui/widgets/section_title_widget.dart';
 import 'package:sezon/src/modules/_app/ui/widgets/user_avatar_widget.dart';
 import 'package:sezon/src/modules/products/models/product.dart';
-import 'package:sezon/src/modules/products/ui/widgets/category_widget.dart';
+import 'package:sezon/src/modules/products/ui/pages/categories_page/categories_page_controller.dart';
 import 'package:sezon/src/modules/products/ui/widgets/product_widget.dart';
+import 'package:sezon/src/modules/products/ui/widgets/selectable_category_widget.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class CategoriesPage extends StatefulWidget {
+  const CategoriesPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<CategoriesPage> createState() => _CategoriesPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CategoriesPageState extends State<CategoriesPage> {
   // controller.
-  late final HomePageController _homePageController =
-      Get.find<HomePageController>();
+  late final CategoriesPageController _categoriesPageController =
+      Get.find<CategoriesPageController>();
 
   // dispose.
   @override
@@ -42,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         leading: const Center(
           child: UserAvatarWidget(),
         ),
-        title: 'الرئيسية',
+        title: 'الفئات',
         actions: [
           SvgPicture.asset(
             '${Constants.assetsVectorsPath}notifications.svg',
@@ -52,59 +50,63 @@ class _HomePageState extends State<HomePage> {
           15.horizontalSpace,
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: _homePageController.refreshAll,
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Container(
-            padding: EdgeInsets.all(16.h),
-            child: Column(
-              children: [
-                const CustomSearchTextFieldWidget(),
-                15.verticalSpace,
-                const SectionTitleWidget(
-                  title: 'الفئات',
+      body: Row(
+        children: [
+          Container(
+            width: 80.w,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 3.r,
+                  spreadRadius: 5.r,
                 ),
-                10.verticalSpace,
-                SizedBox(
-                  height: 70.h,
-                  child: GetBuilder<HomePageController>(
-                    id: 'categories',
-                    builder: (controller) => controller.isCategoriesLoading
-                        ? Center(
-                            child: SpinKitFadingCube(
-                              color: Get.theme.primaryColor,
-                              size: 18.r,
+              ],
+            ),
+            child: GetBuilder<CategoriesPageController>(
+              id: 'categories',
+              builder: (controller) => controller.isCategoriesLoading
+                  ? Center(
+                      child: SpinKitFadingCube(
+                        color: Get.theme.primaryColor,
+                        size: 18.r,
+                      ),
+                    )
+                  : controller.categories.isEmpty
+                      ? const Center(
+                          child: Text('لا يوجد فئات'),
+                        )
+                      : controller.isCategoriesLoadingFailed
+                          ? Center(
+                              child: FailureWidget(
+                                onTap: controller.refreshCategories,
+                              ),
+                            )
+                          : ListView.separated(
+                              itemCount:
+                                  _categoriesPageController.categories.length,
+                              separatorBuilder: (_, index) => 15.verticalSpace,
+                              itemBuilder: (_, index) =>
+                                  SelectableCategoryWidget(
+                                isSelected:
+                                    index == controller.selectedCategoryIndex,
+                                category:
+                                    _categoriesPageController.categories[index],
+                                onTap: () {
+                                  _categoriesPageController.onCategorySelected(
+                                      index: index);
+                                },
+                              ),
                             ),
-                          )
-                        : controller.isCategoriesLoadingFailed
-                            ? Center(
-                                child: FailureWidget(
-                                  onTap: controller.refreshCategories,
-                                ),
-                              )
-                            : controller.categories.isEmpty
-                                ? const Center(
-                                    child: Text('لا يوجد فئات'),
-                                  )
-                                : ListView.separated(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: controller.categories.length,
-                                    separatorBuilder: (_, index) => SizedBox(
-                                      width: 15.w,
-                                    ),
-                                    itemBuilder: (_, index) => CategoryWidget(
-                                      category: controller.categories[index],
-                                    ),
-                                  ),
-                  ),
-                ),
-                15.verticalSpace,
-                const SectionTitleWidget(
-                  title: 'المنتجات',
-                ),
-                10.verticalSpace,
-                GetBuilder<HomePageController>(
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(16.h),
+              child: RefreshIndicator(
+                onRefresh: _categoriesPageController.refreshProducts,
+                child: GetBuilder<CategoriesPageController>(
                   id: 'products',
                   builder: (controller) => controller.isProductsLoading
                       ? Center(
@@ -125,12 +127,10 @@ class _HomePageState extends State<HomePage> {
                                 )
                               : GridView.builder(
                                   itemCount: controller.products.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
                                   gridDelegate:
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
-                                    mainAxisExtent: 200.h,
+                                    mainAxisExtent: 140.h,
                                     mainAxisSpacing: 10.h,
                                     crossAxisSpacing: 10.w,
                                   ),
@@ -141,15 +141,16 @@ class _HomePageState extends State<HomePage> {
                                           tag: controller.products[index].id);
                                       return ProductWidget(
                                         tag: controller.products[index].id!,
+                                        imageSize: 80,
                                       );
                                     },
                                   ),
                                 ),
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
