@@ -102,7 +102,7 @@ class ConfirmationWidget extends StatelessWidget {
                     Expanded(
                       child: TextButton(
                         child: Text(
-                          'الغاء',
+                          'Cancel'.tr,
                           style: TextStyle(
                             fontSize: 16.sp,
                             color: Colors.black,

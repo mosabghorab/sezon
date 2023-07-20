@@ -22,7 +22,6 @@ class _SignInPageState extends State<SignInPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    _signInPageController.dispose();
     Get.delete<SignInPageController>();
     super.dispose();
   }
@@ -54,7 +53,7 @@ class _SignInPageState extends State<SignInPage> {
                 ],
               ),
               Text(
-                'تسجيل دخول',
+                'Sign In'.tr,
                 style: TextStyle(
                   fontSize: 22.sp,
                   fontWeight: FontWeight.bold,
@@ -65,33 +64,36 @@ class _SignInPageState extends State<SignInPage> {
                 padding: EdgeInsets.all(24.h),
                 child: Column(
                   children: [
-                    CustomTextFieldWidget(
-                      title: 'رقم الهاتف',
-                      hintText: 'ادخل رقم الهاتف',
-                      isMobile: true,
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'رقم الهاتف مطلوب';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) => _signInPageController.phone = value,
+                    Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: CustomTextFieldWidget(
+                        title: 'Phone Number'.tr,
+                        hintText: 'Enter phone number'.tr,
+                        isMobile: true,
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Phone number is required'.tr;
+                          }
+                          return null;
+                        },
+                        onSaved: (value) => _signInPageController.phone = value,
+                      ),
                     ),
                     30.verticalSpace,
                     CustomButtonWidget(
-                      title: 'تسجيل الدخول',
+                      title: 'Sign In'.tr,
                       onTap: _signInPageController.signIn,
                     ),
                     30.verticalSpace,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('ليس لديك حساب؟ '),
+                        Text('${'You dont have an account?'.tr} '),
                         InkWell(
                           onTap: _signInPageController.navigateToSignUpPage,
                           child: Text(
-                            'حساب جديد',
+                            'Sign Up'.tr,
                             style: TextStyle(
                               color: Get.theme.primaryColor,
                               decoration: TextDecoration.underline,

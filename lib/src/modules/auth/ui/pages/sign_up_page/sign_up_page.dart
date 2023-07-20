@@ -22,7 +22,6 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    _signUpPageController.dispose();
     Get.delete<SignUpPageController>();
     super.dispose();
   }
@@ -54,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ],
               ),
               Text(
-                'إنشاء حساب جديد',
+                'Sign Up'.tr,
                 style: TextStyle(
                   fontSize: 22.sp,
                   fontWeight: FontWeight.bold,
@@ -66,44 +65,48 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   children: [
                     CustomTextFieldWidget(
-                      title: 'الاسم',
-                      hintText: 'ادخل الاسم',
+                      title: 'Name'.tr,
+                      hintText: 'Enter name'.tr,
                       keyboardType: TextInputType.name,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'الاسم مطلوب';
+                          return 'Name is required'.tr;
                         }
                         return null;
                       },
                       onSaved: (value) => _signUpPageController.name = value,
                     ),
                     15.verticalSpace,
-                    CustomTextFieldWidget(
-                      title: 'رقم الهاتف',
-                      hintText: 'ادخل رقم الهاتف',
-                      keyboardType: TextInputType.text,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'رقم الهاتف مطلوب';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) => _signUpPageController.phone = value,
+                    Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: CustomTextFieldWidget(
+                        title: 'Phone Number'.tr,
+                        hintText: 'Enter phone number'.tr,
+                        isMobile: true,
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Phone number is required'.tr;
+                          }
+                          return null;
+                        },
+                        onSaved: (value) => _signUpPageController.phone = value,
+                      ),
                     ),
                     30.verticalSpace,
                     CustomButtonWidget(
-                      title: 'تسجيل حساب',
+                      title: 'Sign Up'.tr,
                       onTap: _signUpPageController.signUp,
                     ),
                     30.verticalSpace,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('هل لديك حساب؟ '),
+                        Text('${'Do you have an account?'.tr} '),
                         InkWell(
                           onTap: _signUpPageController.navigateBackToSignInPage,
                           child: Text(
-                            'تسجيل دخول',
+                            'Sign In'.tr,
                             style: TextStyle(
                               color: Get.theme.primaryColor,
                               decoration: TextDecoration.underline,

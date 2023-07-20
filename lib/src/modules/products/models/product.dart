@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:sezon/src/config/core/enums.dart';
 import 'package:sezon/src/config/helpers.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/favorites_service.dart';
+import 'package:sezon/src/managers/shared_preferences_manager.dart';
+import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/favorites_repository.dart';
 
 class Product extends GetxController {
   // notifiable.
@@ -18,7 +19,8 @@ class Product extends GetxController {
     }
   }
 
-  late final FavoritesService _favoritesService = FavoritesService.instance;
+  late final FavoritesRepository _favoritesService =
+      FavoritesRepository.instance;
 
   String? id;
   String? categoryId;
@@ -52,17 +54,27 @@ class Product extends GetxController {
         price: json['price'],
       );
 
+  // get name according to current language.
+  get name =>
+      SharedPreferencesManager.instance.getAppLang() == 'en' ? nameEn : nameAr;
+
+  // get description according to current language.
+  get description => SharedPreferencesManager.instance.getAppLang() == 'en'
+      ? descriptionEn
+      : descriptionAr;
+
   // add to favorite.
   void addToFavorite() async {
     try {
       await _favoritesService.addToFavorite(productId: id!);
       Helpers.showMessage(
-          text: 'تمت اضافة المنتج الى المفضلة',
+          text: 'Product add to favorite'.tr,
           messageType: MessageType.successMessage);
     } catch (error) {
       // error.
       Helpers.showMessage(
-          text: 'حدث خطأ ما', messageType: MessageType.failureMessage);
+          text: 'Something went worng'.tr,
+          messageType: MessageType.failureMessage);
       debugPrint('error : $error');
     }
   }
@@ -72,12 +84,13 @@ class Product extends GetxController {
     try {
       await _favoritesService.removeFromFavorite(productId: id!);
       Helpers.showMessage(
-          text: 'تمت حذف المنتج من المفضلة',
+          text: 'Product removed from favorite'.tr,
           messageType: MessageType.successMessage);
     } catch (error) {
       // error.
       Helpers.showMessage(
-          text: 'حدث خطأ ما', messageType: MessageType.failureMessage);
+          text: 'Something went wrong'.tr,
+          messageType: MessageType.failureMessage);
       debugPrint('error : $error');
     }
   }

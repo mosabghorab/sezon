@@ -64,7 +64,7 @@ class Helpers {
               primaryAction: TextButton(
                 onPressed: () => controller.dismiss(),
                 child: Text(
-                  'تجاهل',
+                  'DISMISS'.tr,
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: Helpers.getFontFamily(),
@@ -225,14 +225,8 @@ class Helpers {
   // get current font family.
   static String getFontFamily() =>
       SharedPreferencesManager.instance.getAppLang() == 'en'
-          ? 'tajawal'
+          ? 'poppins'
           : 'tajawal';
-
-  // get years.
-  static List<String> getYears() => List.generate(
-        (DateTime.now().year + 1) - 1949,
-        (index) => '${(DateTime.now().year + 1) - index}',
-      );
 
   // email validator.
   static bool isValidEmailAddress(String text) => RegExp(
@@ -249,14 +243,6 @@ class Helpers {
   static bool isValidUrl(String text) => RegExp(
           r'^((?:.|\n)*?)((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?)')
       .hasMatch(text);
-
-  // headers.
-  static Map<String, dynamic> headers({
-    String? token,
-  }) =>
-      {
-        // 'Authorization': 'Bearer ${token ?? AppSharedData.currentUser?.token}',
-      };
 
   // image encryption.
   static String encryptImage({

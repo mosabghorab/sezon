@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:sezon/src/config/core/enums.dart';
 import 'package:sezon/src/config/helpers.dart';
 import 'package:sezon/src/modules/_app/app_router.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/orders_service.dart';
 import 'package:sezon/src/modules/products/models/order_address.dart';
 import 'package:sezon/src/modules/products/models/order_details.dart';
 import 'package:sezon/src/modules/products/models/product.dart';
+import 'package:sezon/src/modules/products/services/orders_service.dart';
 import 'package:sezon/src/modules/products/ui/widgets/add_address_widget/add_address_widget.dart';
 import 'package:sezon/src/modules/products/ui/widgets/add_address_widget/add_address_widget_controller.dart';
 import 'package:sezon/src/modules/products/ui/widgets/add_order_details_widget/add_order_details_widget_controller.dart';
@@ -27,7 +27,7 @@ class CheckoutPageController extends GetxController {
   }
 
   // services.
-  late final OrdersService _ordersService = OrdersService.instance;
+  late final OrdersService _ordersService = Get.find<OrdersService>();
 
   // data.
   OrderAddress? orderAddress;
@@ -51,23 +51,23 @@ class CheckoutPageController extends GetxController {
   void addOrder() async {
     if (orderAddress == null) {
       Helpers.showMessage(
-          text: 'الرجاء اضافة عنوان للطلب',
+          text: 'Please add an address to the order'.tr,
           messageType: MessageType.failureMessage);
       return;
     }
     if (orderDetails == null) {
       Helpers.showMessage(
-          text: 'الرجاء اضافة مواصفات المنتج',
+          text: 'Please add product specifications to the order'.tr,
           messageType: MessageType.failureMessage);
       return;
     }
     Helpers.showConfirmation(
-      title: 'تأكيد الطلب',
-      description: 'هل أنت متأكد من اتمام هذا الطلب؟',
-      confirmText: 'تأكيد',
+      title: 'Confirm Order'.tr,
+      description: 'Are you sure you want to complete this order?'.tr,
+      confirmText: 'Confirm'.tr,
       onConfirm: () async {
         try {
-          Helpers.showLoading(title: 'جاري التأكيد');
+          Helpers.showLoading(title: 'Confirming'.tr);
           await _ordersService.addOrder(
             productId: product.id!,
             orderAddress: orderAddress!,
@@ -75,7 +75,7 @@ class CheckoutPageController extends GetxController {
           );
           Get.back();
           Helpers.showMessage(
-              text: 'تم انشاء الطلب بنجاح',
+              text: 'Order created successfully'.tr,
               messageType: MessageType.successMessage);
           Get.offAllNamed(AppRouter.navbarPage, arguments: {
             'initialIndex': 2,

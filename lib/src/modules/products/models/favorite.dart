@@ -1,4 +1,6 @@
-class Favorite {
+import 'package:equatable/equatable.dart';
+
+class Favorite extends Equatable {
   String? id;
   String? userId;
   String? productId;
@@ -12,4 +14,12 @@ class Favorite {
         userId: json['userId'],
         productId: json['productId'],
       );
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        id,
+        userId,
+        productId,
+      ];
 }

@@ -59,7 +59,8 @@ class SelectableCategoryWidget extends StatelessWidget {
                     ),
                     10.verticalSpace,
                     Text(
-                      category.nameAr ?? '',
+                      category.name,
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

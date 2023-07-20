@@ -23,7 +23,14 @@ class ProductWidget extends StatefulWidget {
 
 class _ProductWidgetState extends State<ProductWidget> {
   // product.
-  late final Product _product = Get.find(tag: widget.tag);
+  late Product product = Get.find(tag: widget.tag);
+
+  // dispose.
+  @override
+  void dispose() {
+    // Get.delete<Product>(tag: widget.tag);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,7 @@ class _ProductWidgetState extends State<ProductWidget> {
       onTap: () {
         Get.toNamed(ProductsRouter.productDetailsPage,
             arguments: {
-              'product': _product,
+              'product': product,
             },
             preventDuplicates: false);
       },
@@ -60,7 +67,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     width: double.infinity,
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                      _product.mainImage ?? '',
+                      product.mainImage ?? '',
                     ),
                     loadingBuilder: (context, progress, chunkEvent) => Center(
                       child: SizedBox(
@@ -88,7 +95,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                     id: 'isFavorite',
                     tag: widget.tag,
                     builder: (controller) => InkWell(
-                      onTap: _product.toggleIsFavorite,
+                      onTap: product.toggleIsFavorite,
                       child: CircleAvatar(
                         radius: 13.r,
                         backgroundColor: Colors.black.withOpacity(0.3),
@@ -106,10 +113,10 @@ class _ProductWidgetState extends State<ProductWidget> {
               ],
             ),
             10.verticalSpace,
-            Text(_product.nameAr ?? ''),
+            Text(product.name),
             5.verticalSpace,
             Text(
-              '${_product.price} ر.س',
+              '${product.price} ${'S.R'.tr}',
               style: TextStyle(
                 color: Get.theme.primaryColor,
                 fontWeight: FontWeight.bold,

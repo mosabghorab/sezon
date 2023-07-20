@@ -25,23 +25,23 @@ class NavbarPageController extends GetxController {
   // pages info.
   List<Map<String, dynamic>> pagesInfo = [
     {
-      'title': 'الرئيسية',
+      'title': 'Home'.tr,
       'icon': 'home',
     },
     {
-      'title': 'الفئات',
+      'title': 'Categories'.tr,
       'icon': 'categories',
     },
     {
-      'title': 'طلباتي',
+      'title': 'My Orders'.tr,
       'icon': 'orders',
     },
     {
-      'title': 'المفضلة',
+      'title': 'Favorite'.tr,
       'icon': 'favorite',
     },
     {
-      'title': 'الاعدادت',
+      'title': 'Settings'.tr,
       'icon': 'settings',
     },
   ];

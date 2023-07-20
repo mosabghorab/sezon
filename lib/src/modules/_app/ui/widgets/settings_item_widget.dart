@@ -5,12 +5,16 @@ class SettingsItemWidget extends StatelessWidget {
   final String title;
   final IconData icon;
   final VoidCallback onTap;
+  final Color? textColor;
+  final Color? iconColor;
 
   const SettingsItemWidget({
     Key? key,
     required this.title,
     required this.icon,
     required this.onTap,
+    this.textColor,
+    this.iconColor,
   }) : super(key: key);
 
   @override
@@ -21,7 +25,7 @@ class SettingsItemWidget extends StatelessWidget {
         padding: EdgeInsets.all(16.h),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(4.r),
+          borderRadius: BorderRadius.circular(8.r),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.04),
@@ -32,9 +36,17 @@ class SettingsItemWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(icon),
+            Icon(
+              icon,
+              color: iconColor,
+            ),
             15.horizontalSpace,
-            Text(title),
+            Text(
+              title,
+              style: TextStyle(
+                color: textColor,
+              ),
+            ),
           ],
         ),
       ),

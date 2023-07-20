@@ -34,7 +34,7 @@ class FavoriteWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product.nameAr ?? '',
+                product.name,
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -42,14 +42,14 @@ class FavoriteWidget extends StatelessWidget {
               ),
               10.verticalSpace,
               Text(
-                product.descriptionAr ?? '',
+                product.description,
                 style: TextStyle(
                   fontSize: 14.sp,
                 ),
               ),
               5.verticalSpace,
               Text(
-                '${product.price}ر.س',
+                '${product.price} ${'S.R'.tr}',
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -63,9 +63,11 @@ class FavoriteWidget extends StatelessWidget {
         InkWell(
           onTap: () {
             Helpers.showConfirmation(
-              title: 'ازالة من المفضلة',
-              description: 'هل أنت متأكد من ازالة هذا المنتج من المفضلة؟',
-              confirmText: 'ازالة',
+              title: 'Remove From Favorite'.tr,
+              description:
+                  'Are you sure you want to remove this product from favorite?'
+                      .tr,
+              confirmText: 'Remove'.tr,
               onConfirm: () async {
                 await product.removeFromFavorite();
                 onDeleteFinished();

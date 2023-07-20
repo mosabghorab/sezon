@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/orders_service.dart';
 import 'package:sezon/src/modules/products/models/order.dart';
+import 'package:sezon/src/modules/products/services/orders_service.dart';
 
 class OrdersPageController extends GetxController {
   // notifiable.
@@ -10,7 +10,7 @@ class OrdersPageController extends GetxController {
   }
 
   // services.
-  late final OrdersService _ordersService = OrdersService.instance;
+  late final OrdersService _ordersService = Get.find<OrdersService>();
 
   // flags.
   bool isOrdersLoading = true;

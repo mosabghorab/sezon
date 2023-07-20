@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/favorites_service.dart';
 import 'package:sezon/src/modules/products/models/product.dart';
+import 'package:sezon/src/modules/products/services/favorites_service.dart';
 
 class FavoritePageController extends GetxController {
   // notifiable.
@@ -10,7 +10,7 @@ class FavoritePageController extends GetxController {
   }
 
   // services.
-  late final FavoritesService _favoritesService = FavoritesService.instance;
+  late final FavoritesService _favoritesService = Get.find<FavoritesService>();
 
   // flags.
   bool isFavoriteLoading = true;

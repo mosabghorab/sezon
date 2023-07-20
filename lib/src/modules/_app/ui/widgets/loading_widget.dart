@@ -36,7 +36,7 @@ class LoadingWidget extends StatelessWidget {
                     width: 15.w,
                   ),
                   Text(
-                    title ?? 'الرجاء الانتظار',
+                    title ?? 'Please Wait'.tr,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 13.sp,

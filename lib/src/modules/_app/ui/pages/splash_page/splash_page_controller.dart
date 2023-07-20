@@ -6,10 +6,11 @@ import 'package:sezon/src/modules/auth/auth_router.dart';
 import 'package:sezon/src/start_up.dart';
 
 class SplashPageController extends GetxController {
+  // on init.
   @override
-  void onReady() {
+  void onInit() {
     init();
-    super.onReady();
+    super.onInit();
   }
 
   // init.

@@ -28,8 +28,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    // _categoriesPageController.dispose();
-    // Get.delete<CategoriesPageController>();
+    Get.delete<CategoriesPageController>();
+    for (var element in _categoriesPageController.products) {
+      Get.delete<Product>(tag: element.id);
+    }
     super.dispose();
   }
 
@@ -40,7 +42,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         leading: const Center(
           child: UserAvatarWidget(),
         ),
-        title: 'الفئات',
+        title: 'Categories'.tr,
         actions: [
           SvgPicture.asset(
             '${Constants.assetsVectorsPath}notifications.svg',
@@ -74,8 +76,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       ),
                     )
                   : controller.categories.isEmpty
-                      ? const Center(
-                          child: Text('لا يوجد فئات'),
+                      ? Center(
+                          child: Text('Categories not found'.tr),
                         )
                       : controller.isCategoriesLoadingFailed
                           ? Center(
@@ -122,8 +124,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                               ),
                             )
                           : controller.products.isEmpty
-                              ? const Center(
-                                  child: Text('لا يوجد منتجات'),
+                              ? Center(
+                                  child: Text('Products not found'.tr),
                                 )
                               : GridView.builder(
                                   itemCount: controller.products.length,

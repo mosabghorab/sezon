@@ -1,4 +1,6 @@
-class OrderDetails {
+import 'package:equatable/equatable.dart';
+
+class OrderDetails extends Equatable {
   String? id;
   String? quantity;
   String? size;
@@ -21,4 +23,12 @@ class OrderDetails {
         'size': size,
         'color': color,
       };
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        quantity,
+        size,
+        color,
+      ];
 }

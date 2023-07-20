@@ -27,7 +27,6 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    _splashScreenController.dispose();
     Get.delete<SplashPageController>();
     _scaleAnimationController.dispose();
     _fadeAnimationController.dispose();

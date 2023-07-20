@@ -21,16 +21,15 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    // _checkoutPageController.dispose();
-    // Get.delete<CheckoutPageController>();
+    Get.delete<SettingsPageController>();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(
-        title: 'الاعدادت',
+      appBar: CustomAppBarWidget(
+        title: 'Settings'.tr,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -40,12 +39,21 @@ class _SettingsPageState extends State<SettingsPage> {
               SettingsItemWidget(
                 onTap: _settingsPageController.navigateToEditProfilePage,
                 icon: Icons.person,
-                title: 'الملف الشخصي',
+                title: 'Profile'.tr,
               ),
+              10.verticalSpace,
+              SettingsItemWidget(
+                onTap: _settingsPageController.changeLanguage,
+                icon: Icons.language,
+                title: 'Change Language'.tr,
+              ),
+              10.verticalSpace,
               SettingsItemWidget(
                 onTap: _settingsPageController.signOut,
                 icon: Icons.exit_to_app,
-                title: 'تسجيل الخروج',
+                title: 'Sign Out'.tr,
+                textColor: Colors.red,
+                iconColor: Colors.red,
               ),
             ],
           ),

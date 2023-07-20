@@ -2,24 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sezon/src/config/constants.dart';
 import 'package:sezon/src/config/shared_data.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/products_service.dart';
+import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/products_repository.dart';
 import 'package:sezon/src/modules/products/models/order.dart' as order;
 import 'package:sezon/src/modules/products/models/order_address.dart';
 import 'package:sezon/src/modules/products/models/order_details.dart';
 import 'package:sezon/src/modules/products/models/product.dart';
 
-class OrdersService {
-  static OrdersService? _instance;
+class OrdersRepository {
+  static OrdersRepository? _instance;
 
   late final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  late final ProductsService _productsService = ProductsService.instance;
+  late final ProductsRepository _productsRepository =
+      ProductsRepository.instance;
 
   // private constructor.
-  OrdersService._();
+  OrdersRepository._();
 
   // singleton pattern.
-  static OrdersService get instance =>
-      _instance ?? (_instance = OrdersService._());
+  static OrdersRepository get instance =>
+      _instance ?? (_instance = OrdersRepository._());
 
   // add order.
   Future<void> addOrder({
@@ -54,7 +55,7 @@ class OrdersService {
           in querySnapshot.docs) {
         order.Order o = order.Order.fromJson(documentSnapshot.data()!)
           ..id = documentSnapshot.id;
-        Product? product = await _productsService.getProductById(
+        Product? product = await _productsRepository.getProductById(
           productId: o.productId!,
         );
         if (product != null) o.product = product;

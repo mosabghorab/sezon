@@ -25,7 +25,8 @@ class SharedPreferencesManager {
 
   //||...  get the current app lang ...||
   String? getAppLang() {
-    return _sharedPreferences!.getString(Constants.sharedPreferencesAppLang);
+    return _sharedPreferences!.getString(Constants.sharedPreferencesAppLang) ??
+        Constants.sharedPreferencesAppLangDefaultValue;
   }
 
   //||...  set the current app lang ...||

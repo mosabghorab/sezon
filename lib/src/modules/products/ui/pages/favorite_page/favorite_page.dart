@@ -26,8 +26,7 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    // _homePageController.dispose();
-    // Get.delete<HomePageController>();
+    Get.delete<FavoritePageController>();
     super.dispose();
   }
 
@@ -38,7 +37,7 @@ class _FavoritePageState extends State<FavoritePage> {
         leading: const Center(
           child: UserAvatarWidget(),
         ),
-        title: 'المفضلة',
+        title: 'Favorite'.tr,
         actions: [
           SvgPicture.asset(
             '${Constants.assetsVectorsPath}notifications.svg',
@@ -66,8 +65,8 @@ class _FavoritePageState extends State<FavoritePage> {
                       ),
                     )
                   : controller.products.isEmpty
-                      ? const Center(
-                          child: Text('المفضلة فارغة'),
+                      ? Center(
+                          child: Text('Favorite is empty'.tr),
                         )
                       : RefreshIndicator(
                           onRefresh: _favoritePageController.refreshFavorite,

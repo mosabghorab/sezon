@@ -12,11 +12,5 @@ ThemeData lightTheme() {
     textSelectionTheme: const TextSelectionThemeData(
       cursorColor: Color(0xffD92728),
     ),
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {
-        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-      },
-    ),
   );
 }

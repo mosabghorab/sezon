@@ -1,12 +1,12 @@
 class Constants {
   //||... app name ...||
-  static const String appName = "Jordan Motor";
+  static const String appName = "Sezon";
 
 //           ||-------------------------------------------||
 
   //||... shared preferences ...||
   static const String sharedPreferencesAppLang = 'appLang';
-  static const String sharedPreferencesAppLangDefaultValue = 'ar';
+  static const String sharedPreferencesAppLangDefaultValue = 'en';
   static const String sharedPreferencesIsNotificationEnabled =
       'isNotificationsEnabled';
   static const bool sharedPreferencesIsNotificationEnabledDefaultValue = true;
@@ -57,23 +57,23 @@ class Constants {
   //           ||-------------------------------------------||
 
   //||... local notifications ...||
-  static const String firebasePushNotificationsTopic = 'jordanMotor';
-  static const String androidNotificationChannelId = 'jordanMotorId';
-  static const String androidNotificationChannelName = 'jordanMotor';
+  static const String firebasePushNotificationsTopic = 'sezon';
+  static const String androidNotificationChannelId = 'sezonId';
+  static const String androidNotificationChannelName = 'sezon';
 
   //||... local notifications ...||
 
   //           ||-------------------------------------------||
 
   //||... firebase dynamic links ...||
-  static const String firebaseDynamicLinksUriPrefix =
-      'https://jordan.page.link';
-
-  // firebase dynamic links types.
-  static const String firebaseDynamicLinksTypeAd = 'ad';
-  static const String firebaseDynamicLinksTypeShop = 'shop';
-  static const String firebaseDynamicLinksTypeNews = 'news';
-  static const String firebaseDynamicLinksTypeOffer = 'offer';
+  // static const String firebaseDynamicLinksUriPrefix =
+  //     'https://jordan.page.link';
+  //
+  // // firebase dynamic links types.
+  // static const String firebaseDynamicLinksTypeAd = 'ad';
+  // static const String firebaseDynamicLinksTypeShop = 'shop';
+  // static const String firebaseDynamicLinksTypeNews = 'news';
+  // static const String firebaseDynamicLinksTypeOffer = 'offer';
 
   //||... firebase dynamic links ...||
 
@@ -81,5 +81,7 @@ class Constants {
   static const String firebaseFirestoreCollectionUsers = 'users';
   static const String firebaseFirestoreCollectionFavorites = 'favorites';
   static const String firebaseFirestoreCollectionOrders = 'orders';
+  static const String firebaseFirestoreCollectionProducts = 'products';
+  static const String firebaseFirestoreCollectionCategories = 'categories';
 //||... firebase firestore collections ...||
 }

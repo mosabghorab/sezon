@@ -30,8 +30,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    // _homePageController.dispose();
-    // Get.delete<HomePageController>();
+    Get.delete<HomePageController>();
+    for (var element in _homePageController.products) {
+      Get.delete<Product>(tag: element.id);
+    }
     super.dispose();
   }
 
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         leading: const Center(
           child: UserAvatarWidget(),
         ),
-        title: 'الرئيسية',
+        title: 'Home'.tr,
         actions: [
           SvgPicture.asset(
             '${Constants.assetsVectorsPath}notifications.svg',
@@ -60,10 +62,12 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(16.h),
             child: Column(
               children: [
-                const CustomSearchTextFieldWidget(),
+                CustomSearchTextFieldWidget(
+                  onSubmitted: _homePageController.onSearch,
+                ),
                 15.verticalSpace,
-                const SectionTitleWidget(
-                  title: 'الفئات',
+                SectionTitleWidget(
+                  title: 'Categories'.tr,
                 ),
                 10.verticalSpace,
                 SizedBox(
@@ -84,8 +88,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               )
                             : controller.categories.isEmpty
-                                ? const Center(
-                                    child: Text('لا يوجد فئات'),
+                                ? Center(
+                                    child: Text('No categories found'.tr),
                                   )
                                 : ListView.separated(
                                     scrollDirection: Axis.horizontal,
@@ -100,8 +104,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 15.verticalSpace,
-                const SectionTitleWidget(
-                  title: 'المنتجات',
+                SectionTitleWidget(
+                  title: 'Products'.tr,
                 ),
                 10.verticalSpace,
                 GetBuilder<HomePageController>(
@@ -120,8 +124,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             )
                           : controller.products.isEmpty
-                              ? const Center(
-                                  child: Text('لا يوجد منتجات'),
+                              ? Center(
+                                  child: Text('No products found'.tr),
                                 )
                               : GridView.builder(
                                   itemCount: controller.products.length,
@@ -136,8 +140,8 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   itemBuilder: (_, index) => Builder(
                                     builder: (context) {
-                                      Get.create<Product>(
-                                          () => controller.products[index],
+                                      Get.put<Product>(
+                                          controller.products[index],
                                           tag: controller.products[index].id);
                                       return ProductWidget(
                                         tag: controller.products[index].id!,

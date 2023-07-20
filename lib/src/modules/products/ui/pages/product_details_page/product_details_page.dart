@@ -29,17 +29,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    // _productDetailsPageController.dispose();
-    // Get.delete<ProductDetailsPageController>(
-    //     tag: _productDetailsPageController.product.id);
+    Get.delete<ProductDetailsPageController>(
+        tag: _productDetailsPageController.product.id);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(
-        title: 'تفاصيل المنتج',
+      appBar: CustomAppBarWidget(
+        title: 'Product Details'.tr,
       ),
       body: RefreshIndicator(
         onRefresh: _productDetailsPageController.refreshSuggestedProducts,
@@ -127,7 +126,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _productDetailsPageController.product.nameAr ?? '',
+                      _productDetailsPageController.product.name,
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
@@ -135,7 +134,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     5.verticalSpace,
                     Text(
-                      '${_productDetailsPageController.product.price}ر.س',
+                      '${_productDetailsPageController.product.price} ${'S.R'.tr}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
@@ -144,14 +143,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                     5.verticalSpace,
                     Text(
-                      _productDetailsPageController.product.descriptionAr ?? '',
+                      _productDetailsPageController.product.description,
                       style: TextStyle(
                         fontSize: 14.sp,
                       ),
                     ),
                     15.verticalSpace,
-                    const SectionTitleWidget(
-                      title: 'منتجات ذات صلة',
+                    SectionTitleWidget(
+                      title: 'Suggested Products'.tr,
                     ),
                     10.verticalSpace,
                     SizedBox(
@@ -175,8 +174,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     ),
                                   )
                                 : controller.suggestedProducts.isEmpty
-                                    ? const Center(
-                                        child: Text('لا يوجد منتجات ذات صلة'),
+                                    ? Center(
+                                        child: Text(
+                                          'No suggested product found'.tr,
+                                        ),
                                       )
                                     : ListView.builder(
                                         itemCount:
@@ -231,8 +232,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   tag: _productDetailsPageController.product.id,
                                   builder: (controller) => Text(
                                     controller.isFavorite
-                                        ? 'ازالة من المفضلة'
-                                        : 'اضافة الى المفضلة',
+                                        ? 'Remove from favorite'.tr
+                                        : 'Add to favorite'.tr,
                                     style: TextStyle(
                                       color: Get.theme.primaryColor,
                                       fontWeight: FontWeight.bold,
@@ -260,10 +261,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   color: Get.theme.primaryColor,
                                 ),
                               ),
-                              child: const Center(
+                              child: Center(
                                 child: Text(
-                                  'شراء الان',
-                                  style: TextStyle(
+                                  'Buy Now'.tr,
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   ),

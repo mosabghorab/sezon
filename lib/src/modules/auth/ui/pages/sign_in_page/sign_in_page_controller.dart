@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:sezon/src/config/core/enums.dart';
 import 'package:sezon/src/config/helpers.dart';
 import 'package:sezon/src/modules/auth/auth_router.dart';
-import 'package:sezon/src/modules/auth/data_sources/remote_data_source/firebase_data_source/users_service.dart';
+import 'package:sezon/src/modules/auth/services/users_service.dart';
 
 class SignInPageController extends GetxController {
   // form key.
   late final GlobalKey<FormState> formKey = GlobalKey();
 
   // services.
-  late final UsersService _usersService = UsersService.instance;
+  late final UsersService _usersService = Get.find<UsersService>();
 
   // fields.
   String? phone;
@@ -36,12 +36,13 @@ class SignInPageController extends GetxController {
           );
         } else {
           Helpers.showMessage(
-              text: 'رقم الهاتف غير موجود',
+              text: 'Phone number does not exist'.tr,
               messageType: MessageType.failureMessage);
         }
       } else {
         Helpers.showMessage(
-            text: 'حدث خطأ ما', messageType: MessageType.failureMessage);
+            text: 'Something went wrong'.tr,
+            messageType: MessageType.failureMessage);
       }
     } catch (error) {
       debugPrint('error : $error');

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import '../../../../config/constants.dart';
 
 class CustomSearchTextFieldWidget extends StatelessWidget {
-  const CustomSearchTextFieldWidget({super.key});
+  final void Function(String? value) onSubmitted;
+
+  const CustomSearchTextFieldWidget({
+    super.key,
+    required this.onSubmitted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +19,7 @@ class CustomSearchTextFieldWidget extends StatelessWidget {
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.grey.shade200,
-        hintText: 'كلمة البحث هنا...',
+        hintText: 'Search here...'.tr,
         contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
@@ -26,6 +32,7 @@ class CustomSearchTextFieldWidget extends StatelessWidget {
           ),
         ),
       ),
+      onSubmitted: onSubmitted,
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/categories_service.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/products_service.dart';
 import 'package:sezon/src/modules/products/models/category.dart';
 import 'package:sezon/src/modules/products/models/product.dart';
+import 'package:sezon/src/modules/products/services/categories_service.dart';
+import 'package:sezon/src/modules/products/services/products_service.dart';
 
 class HomePageController extends GetxController {
   // notifiable.
@@ -16,8 +16,9 @@ class HomePageController extends GetxController {
   }
 
   // services.
-  late final CategoriesService _categoriesService = CategoriesService.instance;
-  late final ProductsService _productsService = ProductsService.instance;
+  late final CategoriesService _categoriesService =
+      Get.find<CategoriesService>();
+  late final ProductsService _productsService = Get.find<ProductsService>();
 
   // flags.
   bool isCategoriesLoading = true;
@@ -28,6 +29,9 @@ class HomePageController extends GetxController {
   // data.
   List<Category> categories = [];
   List<Product> products = [];
+
+  // fields.
+  String? name;
 
   // on init.
   @override
@@ -76,7 +80,9 @@ class HomePageController extends GetxController {
         isProductsLoadingFailed = false;
         notifyProducts();
       }
-      List<Product>? products = await _productsService.getProducts();
+      List<Product>? products = await _productsService.getProducts(
+        name: name,
+      );
       if (products != null) {
         // success.
         this.products = products;
@@ -108,6 +114,12 @@ class HomePageController extends GetxController {
   // refresh all.
   Future<void> refreshAll() async {
     refreshCategories();
+    refreshProducts();
+  }
+
+  // on search.
+  void onSearch(String? value) {
+    name = value;
     refreshProducts();
   }
 }

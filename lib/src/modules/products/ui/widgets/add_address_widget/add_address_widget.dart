@@ -54,7 +54,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
                 ),
                 15.horizontalSpace,
                 Text(
-                  'إضافة عنوان جديد',
+                  'Add New Address'.tr,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
@@ -65,12 +65,12 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             15.verticalSpace,
             CustomTextFieldWidget(
               initialValue: _addAddressWidgetController.orderAddress?.country,
-              title: 'الدولة',
-              hintText: 'ادخل الدولة',
+              title: 'Country'.tr,
+              hintText: 'Enter country'.tr,
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'الدولة مطلوبة';
+                  return 'Country is required'.tr;
                 }
                 return null;
               },
@@ -79,12 +79,12 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             5.verticalSpace,
             CustomTextFieldWidget(
               initialValue: _addAddressWidgetController.orderAddress?.city,
-              title: 'المدينة',
-              hintText: 'ادخل المدينة',
+              title: 'City'.tr,
+              hintText: 'Enter city'.tr,
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'المدينة مطلوبة';
+                  return 'City is required'.tr;
                 }
                 return null;
               },
@@ -93,12 +93,12 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             5.verticalSpace,
             CustomTextFieldWidget(
               initialValue: _addAddressWidgetController.orderAddress?.region,
-              title: 'المنطقة',
-              hintText: 'ادخل المنطقة',
+              title: 'Region'.tr,
+              hintText: 'Enter region'.tr,
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'المنطقة مطلوبة';
+                  return 'Region is required'.tr;
                 }
                 return null;
               },
@@ -107,12 +107,12 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             5.verticalSpace,
             CustomTextFieldWidget(
               initialValue: _addAddressWidgetController.orderAddress?.street,
-              title: 'الشارع',
-              hintText: 'ادخل الشارع',
+              title: 'Street'.tr,
+              hintText: 'Enter street'.tr,
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'الشارع مطلوب';
+                  return 'Street is required'.tr;
                 }
                 return null;
               },
@@ -121,12 +121,12 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             5.verticalSpace,
             CustomTextFieldWidget(
               initialValue: _addAddressWidgetController.orderAddress?.zipCode,
-              title: 'الرمز البريدي',
-              hintText: 'ادخل الرمز البريدي',
+              title: 'Zip Code'.tr,
+              hintText: 'Enter zip code'.tr,
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'الرمز البريدي مطلوب';
+                  return 'Zip code is required'.tr;
                 }
                 return null;
               },
@@ -134,7 +134,7 @@ class _AddAddressWidgetState extends State<AddAddressWidget> {
             ),
             15.verticalSpace,
             CustomButtonWidget(
-              title: 'حفظ',
+              title: 'Save'.tr,
               onTap: _addAddressWidgetController
                   .navigateOrderAddressBackToCheckoutPage,
             ),

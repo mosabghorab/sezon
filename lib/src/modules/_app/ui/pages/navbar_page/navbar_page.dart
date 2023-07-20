@@ -20,7 +20,6 @@ class _NavbarPageState extends State<NavbarPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    _navbarPageController.dispose();
     Get.delete<NavbarPageController>();
     super.dispose();
   }

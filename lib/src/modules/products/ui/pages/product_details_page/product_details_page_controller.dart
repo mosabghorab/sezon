@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/products_service.dart';
 import 'package:sezon/src/modules/products/models/product.dart';
 import 'package:sezon/src/modules/products/products_router.dart';
+import 'package:sezon/src/modules/products/services/products_service.dart';
 
 class ProductDetailsPageController extends GetxController {
   // notifiable.
@@ -16,7 +16,7 @@ class ProductDetailsPageController extends GetxController {
   }
 
   // services.
-  late final ProductsService _productsService = ProductsService.instance;
+  late final ProductsService _productsService = Get.find<ProductsService>();
 
   // flags.
   bool isSuggestedProductsLoading = true;

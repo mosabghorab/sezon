@@ -4,19 +4,19 @@ import 'package:sezon/src/config/constants.dart';
 import 'package:sezon/src/config/shared_data.dart';
 import 'package:sezon/src/modules/auth/models/app_user.dart';
 
-class UsersService {
-  static UsersService? _instance;
+class UsersRepository {
+  static UsersRepository? _instance;
 
   late final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   // private constructor.
-  UsersService._();
+  UsersRepository._();
 
   // singleton pattern.
-  static UsersService get instance =>
-      _instance ?? (_instance = UsersService._());
+  static UsersRepository get instance =>
+      _instance ?? (_instance = UsersRepository._());
 
-  // create a user and get it.
+  // create a user.
   Future<void> createUser({
     required String uid,
     required String name,
@@ -39,6 +39,7 @@ class UsersService {
   // edit user.
   Future<AppUser?> editUser({
     required String name,
+    String? avatar,
   }) async {
     try {
       await _firebaseFirestore
@@ -46,6 +47,7 @@ class UsersService {
           .doc(SharedData.currentUser!.uid)
           .update({
         'name': name,
+        'avatar': avatar ?? SharedData.currentUser!.avatar,
       });
       return getUser(uid: SharedData.currentUser!.uid!);
     } catch (error) {

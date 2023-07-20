@@ -26,8 +26,7 @@ class _OrdersPageState extends State<OrdersPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    // _homePageController.dispose();
-    // Get.delete<HomePageController>();
+    Get.delete<OrdersPageController>();
     super.dispose();
   }
 
@@ -38,7 +37,7 @@ class _OrdersPageState extends State<OrdersPage> {
         leading: const Center(
           child: UserAvatarWidget(),
         ),
-        title: 'طلباتي',
+        title: 'My Orders'.tr,
         actions: [
           SvgPicture.asset(
             '${Constants.assetsVectorsPath}notifications.svg',
@@ -66,8 +65,8 @@ class _OrdersPageState extends State<OrdersPage> {
                       ),
                     )
                   : controller.orders.isEmpty
-                      ? const Center(
-                          child: Text('لا يوجد طلبات'),
+                      ? Center(
+                          child: Text('No orders found'.tr),
                         )
                       : RefreshIndicator(
                           onRefresh: _ordersPageController.refreshOrders,

@@ -5,12 +5,12 @@ import 'package:sezon/src/config/core/enums.dart';
 import 'package:sezon/src/config/helpers.dart';
 import 'package:sezon/src/managers/shared_preferences_manager.dart';
 import 'package:sezon/src/modules/_app/app_router.dart';
-import 'package:sezon/src/modules/auth/data_sources/remote_data_source/firebase_data_source/auth_service.dart';
 import 'package:sezon/src/modules/auth/models/app_user.dart';
+import 'package:sezon/src/modules/auth/services/auth_service.dart';
 
 class PhoneVerificationPageController extends GetxController {
   // services.
-  late final AuthService _authService = AuthService.instance;
+  late final AuthService _authService = Get.find<AuthService>();
 
   // fields.
   String? otp;
@@ -60,7 +60,8 @@ class PhoneVerificationPageController extends GetxController {
         // failed.
         Get.back();
         Helpers.showMessage(
-            text: 'حدث خطأ ما', messageType: MessageType.failureMessage);
+            text: 'Something went wrong'.tr,
+            messageType: MessageType.failureMessage);
       }
     } catch (error) {
       // error.
@@ -89,7 +90,8 @@ class PhoneVerificationPageController extends GetxController {
     debugPrint('starting [codeSent][PhoneOtpVerificationScreenNotifier]...');
     this.verificationId = verificationId;
     Helpers.showMessage(
-        text: 'تم ارسال الكود بنجاح', messageType: MessageType.successMessage);
+        text: 'Code sent successfully'.tr,
+        messageType: MessageType.successMessage);
   }
 
   // code auto retrieval timeout.
@@ -103,7 +105,7 @@ class PhoneVerificationPageController extends GetxController {
     try {
       if (otp == null) {
         Helpers.showMessage(
-            text: 'الرجاء ادخال كود التفعيل',
+            text: 'Please enter the verification code'.tr,
             messageType: MessageType.failureMessage);
         return;
       }
@@ -123,7 +125,8 @@ class PhoneVerificationPageController extends GetxController {
         // failed.
         Get.back();
         Helpers.showMessage(
-            text: 'حدث خطأ ما', messageType: MessageType.failureMessage);
+            text: 'Something went wrong'.tr,
+            messageType: MessageType.failureMessage);
       }
     } catch (error) {
       // error.

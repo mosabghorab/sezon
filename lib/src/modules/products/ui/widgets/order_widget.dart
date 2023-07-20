@@ -63,7 +63,7 @@ class OrderWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  order.product?.nameAr ?? '',
+                  order.product?.name,
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.bold,
@@ -71,14 +71,14 @@ class OrderWidget extends StatelessWidget {
                 ),
                 10.verticalSpace,
                 Text(
-                  order.product?.descriptionAr ?? '',
+                  order.product?.description,
                   style: TextStyle(
                     fontSize: 14.sp,
                   ),
                 ),
                 5.verticalSpace,
                 Text(
-                  '${order.product?.price ?? 0}.س',
+                  '${order.product?.price ?? 0} ${'S.R'.tr}',
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,

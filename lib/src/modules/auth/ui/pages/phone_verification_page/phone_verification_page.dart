@@ -22,7 +22,6 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    _phoneVerificationPageController.dispose();
     Get.delete<PhoneVerificationPageController>();
     super.dispose();
   }
@@ -52,7 +51,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
               ],
             ),
             Text(
-              'رمز التحقق',
+              'Verification Code'.tr,
               style: TextStyle(
                 fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
@@ -62,7 +61,9 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 50.w),
               child: Text(
-                'لقد قمنا بارسال رمز التحقق إلى هذا الرقم ${_phoneVerificationPageController.phone}',
+                'We sent a verification code to this number @phone'.trParams({
+                  'phone': _phoneVerificationPageController.phone!,
+                }),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15.sp,
@@ -112,7 +113,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
                   ),
                   50.verticalSpace,
                   CustomButtonWidget(
-                    title: 'أرسل',
+                    title: 'Send'.tr,
                     onTap: _phoneVerificationPageController.verifyCode,
                   ),
                 ],

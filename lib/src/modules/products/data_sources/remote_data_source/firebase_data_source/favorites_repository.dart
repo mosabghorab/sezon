@@ -2,22 +2,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sezon/src/config/constants.dart';
 import 'package:sezon/src/config/shared_data.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/products_service.dart';
+import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/products_repository.dart';
 import 'package:sezon/src/modules/products/models/favorite.dart';
 import 'package:sezon/src/modules/products/models/product.dart';
 
-class FavoritesService {
-  static FavoritesService? _instance;
+class FavoritesRepository {
+  static FavoritesRepository? _instance;
 
   late final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  late final ProductsService _productsService = ProductsService.instance;
+  late final ProductsRepository _productsRepository =
+      ProductsRepository.instance;
 
   // private constructor.
-  FavoritesService._();
+  FavoritesRepository._();
 
   // singleton pattern.
-  static FavoritesService get instance =>
-      _instance ?? (_instance = FavoritesService._());
+  static FavoritesRepository get instance =>
+      _instance ?? (_instance = FavoritesRepository._());
 
   // add to favorite.
   Future<void> addToFavorite({
@@ -42,7 +43,7 @@ class FavoritesService {
   }) async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('favorites')
+          .collection(Constants.firebaseFirestoreCollectionFavorites)
           .where('userId', isEqualTo: SharedData.currentUser!.uid)
           .where('productId', isEqualTo: productId)
           .limit(1)
@@ -63,12 +64,14 @@ class FavoritesService {
     try {
       List<Product> products = [];
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firebaseFirestore.collection('favorites').get();
+          await _firebaseFirestore
+              .collection(Constants.firebaseFirestoreCollectionFavorites)
+              .get();
       for (DocumentSnapshot<Map<String, dynamic>> documentSnapshot
           in querySnapshot.docs) {
         Favorite favorite = Favorite.fromJson(documentSnapshot.data()!)
           ..id = documentSnapshot.id;
-        Product? product = await _productsService.getProductById(
+        Product? product = await _productsRepository.getProductById(
           productId: favorite.productId!,
         );
         if (product != null) products.add(product);
@@ -88,7 +91,7 @@ class FavoritesService {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await _firebaseFirestore
-              .collection('favorites')
+              .collection(Constants.firebaseFirestoreCollectionFavorites)
               .where('productId', isEqualTo: productId)
               .limit(1)
               .get();

@@ -45,7 +45,7 @@ class _AddOrderDetailsWidgetState extends State<AddOrderDetailsWidget> {
                 ),
                 15.horizontalSpace,
                 Text(
-                  'إضافة مواصفات المنتج',
+                  'Add Product Specifications'.tr,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
@@ -57,12 +57,12 @@ class _AddOrderDetailsWidgetState extends State<AddOrderDetailsWidget> {
             CustomTextFieldWidget(
               initialValue:
                   _addOrderDetailsWidgetController.orderDetails?.quantity,
-              title: 'الكمية',
-              hintText: 'مثال: 5 قطع',
+              title: 'Quantity'.tr,
+              hintText: 'ex: 5 pieces'.tr,
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'الكمية مطلوبة';
+                  return 'Quantity is required'.tr;
                 }
                 return null;
               },
@@ -73,12 +73,12 @@ class _AddOrderDetailsWidgetState extends State<AddOrderDetailsWidget> {
             CustomTextFieldWidget(
               initialValue:
                   _addOrderDetailsWidgetController.orderDetails?.color,
-              title: 'لون المنتج',
-              hintText: 'مثال: الأسود',
+              title: 'Product Color'.tr,
+              hintText: 'ex: black'.tr,
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'اللون مطلوب';
+                  return 'Color is required'.tr;
                 }
                 return null;
               },
@@ -88,12 +88,12 @@ class _AddOrderDetailsWidgetState extends State<AddOrderDetailsWidget> {
             5.verticalSpace,
             CustomTextFieldWidget(
               initialValue: _addOrderDetailsWidgetController.orderDetails?.size,
-              title: 'الحجم',
-              hintText: 'مثال: xxl',
+              title: 'Size'.tr,
+              hintText: 'ex: xxl'.tr,
               keyboardType: TextInputType.name,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'الحجم مطلوب';
+                  return 'Size is required'.tr;
                 }
                 return null;
               },
@@ -101,7 +101,7 @@ class _AddOrderDetailsWidgetState extends State<AddOrderDetailsWidget> {
             ),
             15.verticalSpace,
             CustomButtonWidget(
-              title: 'حفظ',
+              title: 'Save'.tr,
               onTap: _addOrderDetailsWidgetController
                   .navigateOrderDetailsBackToCheckoutPage,
             ),

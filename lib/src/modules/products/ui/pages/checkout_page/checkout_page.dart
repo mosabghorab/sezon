@@ -23,7 +23,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   void dispose() {
     // dispose and delete controller to not get a memory leak party :).
-    _checkoutPageController.dispose();
     Get.delete<CheckoutPageController>();
     super.dispose();
   }
@@ -32,8 +31,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const CustomAppBarWidget(
-        title: 'إتمام عملية الشراء',
+      appBar: CustomAppBarWidget(
+        title: 'Checkout'.tr,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -67,8 +66,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'العنوان',
+                              Text(
+                                'Address'.tr,
                               ),
                               if (controller.orderAddress != null)
                                 Text(
@@ -119,8 +118,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'مواصفات المنتج',
+                              Text(
+                                'Product Specifications'.tr,
                               ),
                               if (controller.orderDetails != null)
                                 Text(
@@ -159,42 +158,22 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 ),
                 child: Column(
                   children: [
-                    const Row(
+                    Row(
                       children: [
                         Text(
-                          'الملخص',
-                          style: TextStyle(
+                          'Summary'.tr,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],
                     ),
                     15.verticalSpace,
-                    const Row(
-                      children: [
-                        Text('مدة الشحن'),
-                        Spacer(),
-                        Text('لا يوجد'),
-                      ],
-                    ),
-                    5.verticalSpace,
-                    const Divider(),
-                    5.verticalSpace,
                     Row(
                       children: [
-                        const Text('إجمالي تكلفة المنتج'),
+                        Text('Delivery time'.tr),
                         const Spacer(),
-                        Text('${_checkoutPageController.product.price}ر.س'),
-                      ],
-                    ),
-                    5.verticalSpace,
-                    const Divider(),
-                    5.verticalSpace,
-                    const Row(
-                      children: [
-                        Text('إجمالي تكلفة الشحن'),
-                        Spacer(),
-                        Text('0ر.س'),
+                        Text('Not found'.tr),
                       ],
                     ),
                     5.verticalSpace,
@@ -202,15 +181,36 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     5.verticalSpace,
                     Row(
                       children: [
-                        const Text(
-                          'المجموع الكلي',
-                          style: TextStyle(
+                        Text('Total product cost'.tr),
+                        const Spacer(),
+                        Text(
+                            '${_checkoutPageController.product.price} ${'S.R'.tr}'),
+                      ],
+                    ),
+                    5.verticalSpace,
+                    const Divider(),
+                    5.verticalSpace,
+                    Row(
+                      children: [
+                        Text('Delivery total cost'.tr),
+                        const Spacer(),
+                        Text('0 ${'S.R'.tr}'),
+                      ],
+                    ),
+                    5.verticalSpace,
+                    const Divider(),
+                    5.verticalSpace,
+                    Row(
+                      children: [
+                        Text(
+                          'Total'.tr,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const Spacer(),
                         Text(
-                          '${_checkoutPageController.product.price}ر.س',
+                          '${_checkoutPageController.product.price} ${'S.R'.tr}',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -222,7 +222,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
               30.verticalSpace,
               CustomButtonWidget(
-                title: 'تأكيد الطلب',
+                title: 'Confirm Order'.tr,
                 onTap: _checkoutPageController.addOrder,
               ),
             ],

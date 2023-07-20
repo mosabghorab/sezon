@@ -13,11 +13,3 @@ enum AppOpenedBy {
   dynamicLink,
   notification,
 }
-
-//||... enum for custom error type  ...||
-enum CustomErrorType {
-  server,
-  notFound,
-  noInternetConnection,
-  unknown,
-}

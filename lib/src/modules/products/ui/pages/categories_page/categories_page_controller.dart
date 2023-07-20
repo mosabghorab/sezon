@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/categories_service.dart';
-import 'package:sezon/src/modules/products/data_sources/remote_data_source/firebase_data_source/products_service.dart';
 import 'package:sezon/src/modules/products/models/category.dart';
 import 'package:sezon/src/modules/products/models/product.dart';
+import 'package:sezon/src/modules/products/services/categories_service.dart';
+import 'package:sezon/src/modules/products/services/products_service.dart';
 
 class CategoriesPageController extends GetxController {
   // notifiable.
@@ -16,8 +16,9 @@ class CategoriesPageController extends GetxController {
   }
 
   // services.
-  late final CategoriesService _categoriesService = CategoriesService.instance;
-  late final ProductsService _productsService = ProductsService.instance;
+  late final CategoriesService _categoriesService =
+      Get.find<CategoriesService>();
+  late final ProductsService _productsService = Get.find<ProductsService>();
 
   // flags.
   bool isCategoriesLoading = true;
